@@ -14,7 +14,7 @@ To get the project up and running, follow these steps:
 First, clone the project using the following command:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ashanthilochana/aswanu-app.git
 ```
 ### 2. Backend Setup
 
