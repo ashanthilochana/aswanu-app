@@ -1,11 +1,21 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
+
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
+import ThermostatIcon from '@mui/icons-material/Thermostat';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
+import GrainIcon from '@mui/icons-material/Grain';
+import GppGoodIcon from '@mui/icons-material/GppGood';
+import HeatPumpIcon from '@mui/icons-material/HeatPump';
+import SanitizerIcon from '@mui/icons-material/Sanitizer';
+import WavesIcon from '@mui/icons-material/Waves';
+
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
@@ -46,7 +56,7 @@ const Dashboard = () => {
         gridAutoRows="140px"
         gap="20px"
       >
-        {/* ROW 1 */}
+        {/* ROW 1 Stat*/}
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -55,12 +65,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
-            progress="0.75"
-            increase="+14%"
+            title = {"40" + " °C"}
+            subtitle="Temparature"
+            progress="0.2"
+            increase="+20%"
             icon={
-              <EmailIcon
+              <ThermostatIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -74,12 +84,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title="Normal"
+            subtitle="Soil Moisture"
             progress="0.50"
             increase="+21%"
             icon={
-              <PointOfSaleIcon
+              <WaterDropIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -93,12 +103,12 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="32,441"
-            subtitle="New Clients"
+            title="Raining"
+            subtitle="Weather"
             progress="0.30"
             increase="+5%"
             icon={
-              <PersonAddIcon
+              <ThunderstormIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -112,12 +122,90 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
+            title="Normal"
+            subtitle="Air Humidity"
             progress="0.80"
             increase="+43%"
             icon={
-              <TrafficIcon
+              <GrainIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+
+        {/* ROW 2 Stat */}
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="No Alerts"
+            subtitle="Security Status"
+            progress="NULL"
+            increase=""
+            icon={
+              <GppGoodIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="OFF"
+            subtitle="Water Pump Status"
+            progress="NULL"
+            increase=""
+            icon={
+              <HeatPumpIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="OFF"
+            subtitle="Fertilizer Pump Status"
+            progress="NULL"
+            increase=""
+            icon={
+              <SanitizerIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title="Medium"
+            subtitle="Tank Water Level"
+            progress="NULL"
+            increase=""
+            icon={
+              <WavesIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -143,14 +231,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Desease Detection
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                124
               </Typography>
             </Box>
             <Box>
@@ -180,7 +268,7 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Latest Desease Detections
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
