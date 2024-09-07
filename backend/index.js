@@ -14,7 +14,11 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5000"
+  }
+});
 
 // Configure CORS for both Express and Socket.IO
 app.use(corsMiddleware);
