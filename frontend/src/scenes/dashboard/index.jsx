@@ -1,4 +1,14 @@
-import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  useTheme,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 
@@ -7,14 +17,14 @@ import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
-import ThermostatIcon from '@mui/icons-material/Thermostat';
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
-import GrainIcon from '@mui/icons-material/Grain';
-import GppGoodIcon from '@mui/icons-material/GppGood';
-import HeatPumpIcon from '@mui/icons-material/HeatPump';
-import SanitizerIcon from '@mui/icons-material/Sanitizer';
-import WavesIcon from '@mui/icons-material/Waves';
+import ThermostatIcon from "@mui/icons-material/Thermostat";
+import WaterDropIcon from "@mui/icons-material/WaterDrop";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import GrainIcon from "@mui/icons-material/Grain";
+import GppGoodIcon from "@mui/icons-material/GppGood";
+import HeatPumpIcon from "@mui/icons-material/HeatPump";
+import SanitizerIcon from "@mui/icons-material/Sanitizer";
+import WavesIcon from "@mui/icons-material/Waves";
 
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
@@ -31,21 +41,41 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="DASHBOARD" subtitle="ඔබව නැවතත් සාදරයෙන් පිලිගන්නෙමු" />
 
-        <Box>
-          <Button
-            sx={{
-              backgroundColor: colors.blueAccent[700],
-              color: colors.grey[100],
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-            }}
-          >
-            <DownloadOutlinedIcon sx={{ mr: "10px" }} />
-            Download Reports
-          </Button>
+        {/* Created by us */}
+        <Box display="flex">
+          <Box width={150} marginRight={1}>
+            <FormControl fullWidth>
+              <InputLabel id="location-selectr">Location</InputLabel>
+              <Select
+                labelId="location-select"
+                id="location-select"
+                value={10}
+                label="Location"
+                // onChange={}
+              >
+                <MenuItem value={10}>Malabe</MenuItem>
+                <MenuItem value={20}>Polonnaruwa</MenuItem>
+                <MenuItem value={30}>Anuradhapura</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box>
+            <Button
+              sx={{
+                backgroundColor: colors.blueAccent[700],
+                color: colors.grey[100],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "14px 20px",
+              }}
+            >
+              <DownloadOutlinedIcon sx={{ mr: "10px" }} />
+              Download Reports
+            </Button>
+          </Box>
         </Box>
       </Box>
 
@@ -65,7 +95,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title = {"40" + " °C"}
+            title={"40" + " °C"}
             subtitle="Temparature"
             progress="0.2"
             increase="+20%"
