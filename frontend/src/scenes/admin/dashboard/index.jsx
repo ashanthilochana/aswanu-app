@@ -9,8 +9,8 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { tokens } from "../../theme";
-import { mockTransactions } from "../../data/mockData";
+import { tokens } from "../../../theme";
+import { mockTransactions } from "../../../data/mockData";
 
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import EmailIcon from "@mui/icons-material/Email";
@@ -26,13 +26,13 @@ import SanitizerIcon from "@mui/icons-material/Sanitizer";
 import WavesIcon from "@mui/icons-material/Waves";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 
-import Header from "../../components/Header";
-import LineChart from "../../components/LineChart";
-import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
-import StatBox from "../../components/StatBox";
-import ProgressCircle from "../../components/ProgressCircle";
-import { socket } from "../../socket";
+import Header from "../../../components/Header";
+import LineChart from "../../../components/LineChart";
+import GeographyChart from "../../../components/GeographyChart";
+import BarChart from "../../../components/BarChart";
+import StatBox from "../../../components/StatBox";
+import ProgressCircle from "../../../components/ProgressCircle";
+import { socket } from "../../../socket";
 import { useState, useEffect } from "react";
 
 const Dashboard = () => {
@@ -56,7 +56,6 @@ const Dashboard = () => {
     }
 
     function onRefreshData(data) {
-      console.log(data);
       setRealTimeData((prev) => {
         return {
           ...prev,
@@ -86,6 +85,23 @@ const Dashboard = () => {
 
         {/* Created by us */}
         <Box display="flex">
+          <Box width={150} marginRight={1}>
+            <FormControl fullWidth>
+              <InputLabel id="location-selectr">District</InputLabel>
+              <Select
+                labelId="location-select"
+                id="location-select"
+                value={10}
+                label="Location"
+                // onChange={}
+              >
+                <MenuItem value={10}>Colombo</MenuItem>
+                <MenuItem value={20}>Polonnaruwa</MenuItem>
+                <MenuItem value={30}>Anuradhapura</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
           <Box width={150} marginRight={1}>
             <FormControl fullWidth>
               <InputLabel id="location-selectr">Location</InputLabel>
