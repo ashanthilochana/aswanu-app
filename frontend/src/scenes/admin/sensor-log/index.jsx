@@ -4,10 +4,21 @@ import { tokens } from "../../../theme";
 import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
+import { useEffect } from "react";
+import SensorDataController from "../../../controllers/data/sensor.data.controller";
 
 const SensorLog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  useEffect(() => {
+    async function execute()
+    {
+      await SensorDataController.getDataByLocation("Malabe");
+    }
+
+    execute();
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
