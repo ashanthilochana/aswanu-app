@@ -14,4 +14,6 @@ router.get("/api/user/sign-out", (req, res) => {
   res.sendStatus(200);
 });
 
+router.get("/api/user/all", verifyToken, UserController.getAllUsers);
+
 export default router;

@@ -3,6 +3,7 @@ import UserService from "../services/user.service.js";
 
 let UserController = {};
 
+// Add a new user
 UserController.addUser = async (req, res) => {
   try {
     let {
@@ -52,6 +53,18 @@ UserController.addUser = async (req, res) => {
       }
     }
   } catch (error) {}
+};
+
+// Get all users
+UserController.getAllUsers = async (req, res) => {
+  try {
+    let users = await UserService.getAllUsers();
+    res.status(200).send(users);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "An Internal Server error occurred while fetching users" });
+  }
 };
 
 export default UserController;
