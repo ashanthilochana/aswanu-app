@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
+//importing config
 import corsMiddleware from "./middleware/cors.middleware.js";
 import socketConfig from "./config/web-socket.config.js";
+import { scheduleCronJobs } from "./config/cron.config.js";
 
 //importing user routes
 import { default as userRouter } from "./routes/user.routes.js";
@@ -26,14 +28,17 @@ app.use(corsMiddleware);
 // For JSON payloads
 app.use(express.json());
 
+// using routes
 app.use(userRouter);
 
-
-// Socket.IO configuraton
+// using Socket.IO configuraton
 socketConfig(io);
 
 // Set the port from the environment variable or use a default
 const PORT = process.env.PORT || 5500;
+
+//executing cron jobs
+scheduleCronJobs();
 
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
