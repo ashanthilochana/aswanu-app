@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Typography, useTheme, Select } from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
@@ -21,6 +21,9 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import SensorsIcon from "@mui/icons-material/Sensors";
 import AddIcon from "@mui/icons-material/Add";
 import GradingIcon from "@mui/icons-material/Grading";
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import WavesIcon from "@mui/icons-material/Waves";
+import GrassIcon from "@mui/icons-material/Grass";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -164,36 +167,96 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
+              Deseases
+            </Typography>
+
+            <Item
+              title="Add Solutions"
+              to="/admin/add-solutions"
+              icon={<AddIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="All Solutions"
+              to="/admin/view-solutions"
+              icon={<HealthAndSafetyIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Crop
+            </Typography>
+
+            <Item
+              title="Add Tanks"
+              to="/admin/add-tanks"
+              icon={<AddIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="All Tanks"
+              to="/admin/view-tanks"
+              icon={<WavesIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Add Variations"
+              to="/admin/add-rice-variations"
+              icon={<AddIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="View Variations"
+              to="/admin/view-rice-variations"
+              icon={<GrassIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
+              Users
+            </Typography>
+
+            <Item
+              title="Add Users"
+              to="/admin/add-users"
+              icon={<AddIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            <Item
+              title="Manage Users"
+              to="/admin/view-users"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
+            {/* <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 0 5px 20px" }}
+            >
               Pages
             </Typography>
-            <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="shanilka form"
-              to="/shanilka"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="pathum form"
-              to="/pathum"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Geethmani form"
-              to="/geethmani"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
             <Item
               title="Calendar"
               to="/calendar"
@@ -273,7 +336,7 @@ const Sidebar = () => {
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
           </Box>
         </Menu>
       </ProSidebar>

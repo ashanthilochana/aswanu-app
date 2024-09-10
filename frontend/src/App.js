@@ -19,10 +19,19 @@ import AdminDashboard from "./scenes/admin/dashboard";
 import SensorDashboard from "./scenes/admin/sensors-data";
 import SensorForm from "./scenes/admin/add-sensor";
 import SensorLog from "./scenes/admin/sensor-log";
+import AddSolutions from "./scenes/admin/add-solutions";
+import ViewSolutions from "./scenes/admin/view-solutions";
+import AddTanks from "./scenes/admin/add-tanks";
+import ViewTanks from "./scenes/admin/view-tanks";
+import AddRiceVariations from "./scenes/admin/add-rice-variations";
+import ViewRiceVariations from "./scenes/admin/view-rice-variations";
+import AddUsers from "./scenes/admin/add-users";
+import ViewUsers from "./scenes/admin/view-users";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -54,6 +63,14 @@ function App() {
               <Route path="/admin/sensors-data" element={<SensorDashboard />} />
               <Route path="/admin/add-sensor" element={<SensorForm />} />
               <Route path="/admin/sensor-log" element={<SensorLog />} />
+              <Route path="/admin/add-solutions" element={<AddSolutions />} />
+              <Route path="/admin/view-solutions" element={<ViewSolutions />} />
+              <Route path="/admin/add-tanks" element={<AddTanks />} />
+              <Route path="/admin/view-tanks" element={<ViewTanks />} />
+              <Route path="/admin/add-rice-variations" element={<AddRiceVariations />} />
+              <Route path="/admin/view-rice-variations" element={<ViewRiceVariations />} />
+              <Route path="/admin/add-users" element={<AddUsers />} />
+              <Route path="/admin/view-users" element={<ViewUsers />} />
             </Routes>
           </main>
         </div>
