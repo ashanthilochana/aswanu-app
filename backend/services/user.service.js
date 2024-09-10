@@ -40,6 +40,10 @@ UserService.addUser = async (user, email, password) => {
   }
 };
 
+
+
+// ------------------------------------------------------------- Test below service
+
 // Get all users
 UserService.getAllUsers = async () => {
   try {
