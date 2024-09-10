@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -8,13 +9,17 @@ import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
 import Form from "./scenes/form";
-// import Shanilka from"./scenes/Shanilka/solution";
-// import Pathum from"./scenes/Pathum/pathum";
-// import Geethmani from"./scenes/Geethmani/geethmani";
 import Line from "./scenes/line";
 import Pie from "./scenes/pie";
 import FAQ from "./scenes/faq";
 import Geography from "./scenes/geography";
+
+// Import Admin Components
+import AdminDashboard from "./scenes/admin/dashboard";
+import SensorDashboard from "./scenes/admin/sensors-data";
+import SensorForm from "./scenes/admin/add-sensor";
+import SensorLog from "./scenes/admin/sensor-log";
+
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
@@ -37,15 +42,18 @@ function App() {
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/form" element={<Form />} />
-              {/* <Route path="/pathum" element={<Pathum />} />
-              <Route path="/geethmani" element={<Geethmani />} />
-              <Route path="/shanilka" element={<Shanilka />} /> */}
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
+
+              {/* Admin Routes */}
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/sensors-data" element={<SensorDashboard />} />
+              <Route path="/admin/add-sensor" element={<SensorForm />} />
+              <Route path="/admin/sensor-log" element={<SensorLog />} />
             </Routes>
           </main>
         </div>

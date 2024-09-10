@@ -40,4 +40,19 @@ UserService.addUser = async (user, email, password) => {
   }
 };
 
+// Get all users
+UserService.getAllUsers = async () => {
+  try {
+    let users = [];
+    let snapshot = await firestore.collection("users").get();
+    snapshot.forEach((doc) => {
+      users.push(doc.data());
+    });
+    return users;
+  } catch (error) {
+    console.error("An error occurred while fetching all users:", error);
+    throw error;
+  }
+};
+
 export default UserService;
