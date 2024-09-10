@@ -56,6 +56,7 @@ const Dashboard = () => {
     }
 
     function onRefreshData(data) {
+      console.log(data);
       setRealTimeData((prev) => {
         return {
           ...prev,

@@ -38,7 +38,9 @@ git clone https://github.com/ashanthilochana/aswanu-app.git
 	cd firebase
 	```` 
     
--   There is a file named `firebase-key.json-example`. Read it and obtain a **service account key** from Firebase, then update the file with your credentials.   
+-   There is a file named `firebase-key.json-example`. Read it and obtain a **service account key** from Firebase. 
+
+-   Create a firebase-key.json file and paste your service account credentials to it.   
 
 ### 3. Installing Dependencies
 Open two terminal windows:
