@@ -15,8 +15,9 @@
 #define LOCATION "Malabe"
 
 // Pin definitions
-#define W_PUMP 15
-#define F_SPRAY 2
+#define W_PUMP_PIN 15
+#define F_SPRAY_PIN 2
+#define SM_SENSOR_PIN 4
 
 // Firebase ESP32 client object
 FirebaseData fbdo;
@@ -107,8 +108,9 @@ void updateWaterPumpStatus() {
 void setup() {
 
   // Initialize pins
-  pinMode(W_PUMP, OUTPUT);
-  pinMode(F_SPRAY, OUTPUT);
+  pinMode(W_PUMP_PIN, OUTPUT);
+  pinMode(F_SPRAY_PIN, OUTPUT);
+  pinMode(SM_SENSOR_PIN, INPUT);
 
   // Start serial communication
   Serial.begin(115200);
@@ -137,17 +139,10 @@ void setup() {
   updateFertilizerSprayStatus();
   updateWaterPumpStatus();
   updateFirebase();
+
 }
 
 void loop() {
-
-  humidity++;
-  ldr++;
-  ph++;
-  rain++;
-  soilMoisture++;
-  temp++;
-
 
   // Firebase is ready and connected.
   // The user has successfully signed up (or authenticated).
@@ -165,10 +160,20 @@ void loop() {
     updateFirebase();
 
     // Turn On/Off Devices
-    digitalWrite(W_PUMP, waterPump ? HIGH : LOW);
-    digitalWrite(F_SPRAY, fertilizerSpray ? HIGH : LOW);
+    digitalWrite(W_PUMP_PIN, waterPump ? HIGH : LOW);
+    digitalWrite(F_SPRAY_PIN, fertilizerSpray ? HIGH : LOW);
     
   }
+
+
+  // Read Sensor Readings
+  soilMoisture = analogRead(SM_SENSOR_PIN);
+
+  delay(100);
+
+  // Print Sensor Readings
+  Serial.print("Soil Moisture Value: ");
+  Serial.println(soilMoisture);
 
   delay(1000);
 }
