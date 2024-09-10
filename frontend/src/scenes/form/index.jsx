@@ -59,7 +59,7 @@ const Form = () => {
                 sx={{ gridColumn: "span 2" }}
               />
 
-              {/* Added by us */}
+              {/* Added by us
               <FormControl variant="filled">
                 <InputLabel id="demo-simple-select-filled-label">
                   Age
@@ -77,7 +77,7 @@ const Form = () => {
                   <MenuItem value={20}>Twenty</MenuItem>
                   <MenuItem value={30}>Thirty</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl> */}
 
               <TextField
                 fullWidth
