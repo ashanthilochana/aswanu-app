@@ -6,22 +6,35 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  InputAdornment,
 } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
+import axios from "axios";
 
-const AddSolutions = () => {
+const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
     console.log(values);
+
+    axios
+      .post("http://localhost:5300/api/solutions/add", values)
+      .then((response) => {
+        console.log("Form data submitted successfully:", response.data);
+        // Handle success (e.g., clear the form or show a success message)
+      })
+      .catch((error) => {
+        console.error("Error submitting form data:", error);
+        // Handle error (e.g., show an error message)
+      });
   };
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="ADD SOLUTIONS" subtitle="Add new solutions for disease" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -45,109 +58,158 @@ const AddSolutions = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
+
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Solution ID"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.solutionId}
+                name="solutionId"
+                error={!!touched.solutionId && !!errors.solutionId}
+                helperText={touched.solutionId && errors.solutionId}
                 sx={{ gridColumn: "span 2" }}
               />
 
-              {/* Added by us
-              <FormControl variant="filled">
-                <InputLabel id="demo-simple-select-filled-label">
-                  Age
-                </InputLabel>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Solution Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.solutionName}
+                name="solutionName"
+                error={!!touched.solutionName && !!errors.solutionName}
+                helperText={touched.solutionName && errors.solutionName}
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
+                <InputLabel>Disease Category</InputLabel>
                 <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value= {values.age}
+                  labelId="disease-category"
+                  id="disease-category"
+                  name="diseaseCategory"
+                  value={values.diseaseCategory}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.diseaseCategory && !!errors.diseaseCategory}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value="Rice Blast">Rice Blast</MenuItem>
+                  <MenuItem value="Sheath Blight">Sheath Blight</MenuItem>
+                  <MenuItem value="Bacterial Leaf Blight">Bacterial Leaf Blight</MenuItem>
                 </Select>
-              </FormControl> */}
+              </FormControl>
+
+              <Box sx={{ gridColumn: "span 2" }}></Box>
+
+              <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
+                <InputLabel>Application Method</InputLabel>
+                <Select
+                  labelId="application-method"
+                  id="application-method"
+                  name="applicationMethod"
+                  value={values.applicationMethod}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.applicationMethod && !!errors.applicationMethod}
+                >
+                  <MenuItem value="Spray">Spray</MenuItem>
+                  <MenuItem value="Soil Application">Soil Application</MenuItem>
+                  <MenuItem value="Seed Treatment">Seed Treatment</MenuItem>
+                </Select>
+              </FormControl>
 
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Dosage (per hectare)"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.dosage}
+                name="dosage"
+                error={!!touched.dosage && !!errors.dosage}
+                helperText={touched.dosage && errors.dosage}
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">ml</InputAdornment>,
+                }}
+              />
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="number"
+                label="Application Frequency"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.applicationFrequency}
+                name="applicationFrequency"
+                error={!!touched.applicationFrequency && !!errors.applicationFrequency}
+                helperText={touched.applicationFrequency && errors.applicationFrequency}
+                sx={{ gridColumn: "span 2" }}
+              />
+
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Application Interval"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.applicationInterval}
+                name="applicationInterval"
+                error={!!touched.applicationInterval && !!errors.applicationInterval}
+                helperText={touched.applicationInterval && errors.applicationInterval}
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">days</InputAdornment>,
+                }}
+              />
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Cost per hectare"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.costPerHectare}
+                name="costPerHectare"
+                error={!!touched.costPerHectare && !!errors.costPerHectare}
+                helperText={touched.costPerHectare && errors.costPerHectare}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">Rs</InputAdornment>,
+                }}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Email"
+                label="Description"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                value={values.description}
+                name="description"
+                error={!!touched.description && !!errors.description}
+                helperText={touched.description && errors.description}
+               
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
+
+
+              
+
+
             </Box>
+
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Creat new solution
               </Button>
             </Box>
           </form>
@@ -157,27 +219,30 @@ const AddSolutions = () => {
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
 const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+  solutionId: yup.string().required("Solution ID is required"),
+  solutionName: yup.string().required("Solution Name is required"),
+  diseaseCategory: yup.string().required("Disease Category is required"),
+  applicationMethod: yup.string().required("Application Method is required"),
+  dosage: yup.number().required("Dosage is required").positive().integer(),
+  applicationFrequency: yup.number().required("Application Frequency is required").positive().integer(),
+  applicationInterval: yup.number().required("Application Interval is required").positive().integer(),
+  costPerHectare: yup.number().required("Cost per hectare is required").positive(),
+
 });
+
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  solutionId: "",
+  solutionName: "",
+  diseaseCategory: "",
+  applicationMethod: "",
+  dosage: "",
+  applicationFrequency: "",
+  applicationInterval: "",
+  costPerHectare: "",
+  costPerCycle: "",
 };
 
-export default AddSolutions;
+export default Form;
