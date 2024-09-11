@@ -8,8 +8,10 @@
 #define WIFI_PASSWORD "123@ashan"
 
 // Firebase project API Key Firebase RTDB URL
-#define API_KEY "AIzaSyAPLzgkh7VfRS_0QHa_MtYW9vktPderDMA"
-#define DATABASE_URL "https://aswanu-app-default-rtdb.asia-southeast1.firebasedatabase.app/" 
+// #define API_KEY "AIzaSyAPLzgkh7VfRS_0QHa_MtYW9vktPderDMA"
+// #define DATABASE_URL "https://aswanu-app-default-rtdb.asia-southeast1.firebasedatabase.app/" 
+#define API_KEY "AIzaSyAGPPRZ4VorXEJBinSI6UUp3WE6yUE-tQQ"
+#define DATABASE_URL "https://aswanu-db-default-rtdb.asia-southeast1.firebasedatabase.app/" 
 
 // Location
 #define LOCATION "Malabe"
