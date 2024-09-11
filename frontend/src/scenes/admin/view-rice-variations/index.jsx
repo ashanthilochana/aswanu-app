@@ -1,63 +1,74 @@
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
-import { useTheme } from "@mui/material";
+import { useTheme, IconButton } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import axios from "axios";
 
 const ViewRiceVariations = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [riceVariations, setRiceVariations] = useState([]);
+
+  useEffect(() => {
+    const fetchRiceVariations = async () => {
+      try {
+        const response = await axios.get("http://localhost:5300/api/variation/get");
+        const variations = response.data.map((variation, index) => ({
+          ...variation,
+          id: variation.id || index,  // Use the index if id is missing
+        }));
+        setRiceVariations(variations);
+      } catch (error) {
+        console.error("Error fetching rice variations:", error);
+      }
+    };
+
+    fetchRiceVariations();
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "variantName", headerName: "Rice Variant Name", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "growingSeason",
+      headerName: "Growing Season",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "diseaseResistance",
+      headerName: "Disease Resistance",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "environmentalSuitability",
+      headerName: "Environmental Suitability",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "action",
+      headerName: "Action",
       flex: 1,
-    },
-    {
-      field: "zipCode",
-      headerName: "Zip Code",
-      flex: 1,
+      renderCell: (params) => (
+        <Box>
+          <IconButton key={`edit-${params.id}`} aria-label="edit">
+            <EditIcon />
+          </IconButton>
+          <IconButton key={`delete-${params.id}`} aria-label="delete">
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
+        </Box>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
-      <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
-      />
+      <Header title="RICE VARIATIONS" subtitle="List of Rice Variations" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -91,7 +102,7 @@ const ViewRiceVariations = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={riceVariations}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

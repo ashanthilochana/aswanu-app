@@ -14,4 +14,19 @@ SolutionsService.addSolutionsData = async (data) => {
     }
   };
 
+  // Get sensor data from firestore
+SolutionsService.getSolutionsData = async () => {
+    try {
+      const snapshot = await firestore.collection("Solutions").get();
+      let solutionsData = [];
+      snapshot.forEach((doc) => {
+        solutionsData.push(doc.data());
+      });
+      return solutionsData;
+    } catch (error) {
+      console.error("Error getting sensor data from firestore : ", error);
+      throw error;
+    }
+  };
+
 export default SolutionsService;

@@ -14,4 +14,15 @@ RiceVariationController.addRiceVariationData = async (req, res) => {
       }
 };
 
+// get rice variation data
+RiceVariationController.getRiceVariationData = async (req, res) => {
+    try {
+        let data = await RiceVariationService.getRiceVariationData();
+        res.status(200).send(data);
+      } catch (error) {
+        console.error("Error fetching solution data from firestore : ", error);
+        res.status(500).send(error);
+      }
+};
+
 export default RiceVariationController;

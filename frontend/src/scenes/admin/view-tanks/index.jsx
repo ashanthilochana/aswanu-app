@@ -73,18 +73,19 @@ const ViewTanks = () => {
       flex: 1,
       renderCell: (params) => (
         <Box>
-          <IconButton aria-label="edit">
+          <IconButton key={`location-${params.id}`} aria-label="location">
             <LocationOnOutlinedIcon />
           </IconButton>
-          <IconButton aria-label="edit">
+          <IconButton key={`edit-${params.id}`} aria-label="edit">
             <EditIcon />
           </IconButton>
-          <IconButton aria-label="delete">
+          <IconButton key={`delete-${params.id}`} aria-label="delete">
             <DeleteOutlineOutlinedIcon />
           </IconButton>
         </Box>
       ),
-    },
+    }
+    
   ];
 
   return (

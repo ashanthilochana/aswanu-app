@@ -14,4 +14,22 @@ RiceVariationService.addRiceVariationData = async (data) => {
     }
   };
 
+  // get rice variation data from firestore
+RiceVariationService.getRiceVariationData = async () => {
+    try {
+      const snapshot = await firestore.collection("RiceVariation").get();
+      let riceVariationData = [];
+      snapshot.forEach((doc) => {
+        riceVariationData.push(doc.data());
+      });
+      return riceVariationData;
+    } catch (error) {
+      console.error("Error getting rice variation data from firestore : ", error);
+      throw error;
+    }
+  };
+
+
+  
+
 export default RiceVariationService;
