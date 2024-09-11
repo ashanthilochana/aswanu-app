@@ -21,6 +21,17 @@ ref.set(status)
   });
 }
 
+// Add sensor data to firestore
+SensorService.addSensorData = async (data) => {
+  try {
+    let docRef = firestore.collection("SensorsDevices").doc(Date.now().toString());
+    await docRef.set(data);
+  } catch (error) {
+    console.error("Error saving sesnor data to firestore : ", error);
+    throw error;
+  }
+};
+
 // Save sensor data to firestore
 async function saveSensorDataToFirestore(data) {
   try {
