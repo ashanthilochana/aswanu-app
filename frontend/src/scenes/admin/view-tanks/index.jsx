@@ -48,8 +48,8 @@ const ViewTanks = () => {
       align: "left",
     },
     {
-      field: "waterSource",
-      headerName: "Water Source Type",
+      field: "sourceType",  // Update this to match form field name
+      headerName: "Water Source Type", 
       flex: 1,
     },
     {
@@ -63,8 +63,8 @@ const ViewTanks = () => {
       flex: 1,
     },
     {
-      field: "irigatedArea",
-      headerName: "Irigated Area",
+      field: "irrigatedArea",  // Update this to match form field name
+      headerName: "Irrigated Area",
       flex: 1,
     },
     {
@@ -85,9 +85,8 @@ const ViewTanks = () => {
         </Box>
       ),
     }
-    
   ];
-
+  
   return (
     <Box m="20px">
       <Header

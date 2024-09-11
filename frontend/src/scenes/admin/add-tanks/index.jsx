@@ -25,10 +25,12 @@ const AddTank = () => {
       .then((response) => {
         console.log("Form data submitted successfully:", response.data);
         // Handle success (e.g., clear the form or show a success message)
+        window.alert("Tank added successfully!");
       })
       .catch((error) => {
         console.error("Error submitting form data:", error);
         // Handle error (e.g., show an error message)
+        window.alert("Error adding the tank. Please try again.");
       });
   };
 
@@ -71,25 +73,19 @@ const AddTank = () => {
                 sx={{ gridColumn: "span 2" }}
               />
 
-              <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-filled-label">
-                  District/Province
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={values.district}
-                  name="district"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={!!touched.district && !!errors.district}
-                  helperText={touched.district && errors.district}
-                >
-                  <MenuItem value="River">River</MenuItem>
-                  <MenuItem value="Rainwater">Rainwater</MenuItem>
-                  <MenuItem value="Groundwater">Groundwater</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="District/Province"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.district}
+                name="district"
+                error={!!touched.district && !!errors.district}
+                helperText={touched.district && errors.district}
+                sx={{ gridColumn: "span 2" }}
+              />
 
               <TextField
                 fullWidth
