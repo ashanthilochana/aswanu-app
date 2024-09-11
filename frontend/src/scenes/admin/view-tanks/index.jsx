@@ -1,62 +1,97 @@
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
-import { useTheme } from "@mui/material";
+import { useTheme, IconButton } from "@mui/material";
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import axios from "axios";
 
 const ViewTanks = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [tankData, setTankData] = useState([]);
+
+  useEffect(() => {
+    const fetchTankData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5300/api/tank/get");
+        const tanks = response.data.map((tank, index) => ({
+          ...tank,
+          id: tank.id || index,  // Use the index if id is missing
+        }));
+        setTankData(tanks);
+      } catch (error) {
+        console.error("Error fetching tank data:", error);
+      }
+    };
+
+    fetchTankData();
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "tankName", headerName: "Tank Name" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "district",
+      headerName: "District/Province",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
+      field: "tankCapacity",
+      headerName: "Tank Capacity",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "waterSource",
+      headerName: "Water Source Type",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "tankStatus",
+      headerName: "Tank Status",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "installationDate",
+      headerName: "Installation Date",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "irigatedArea",
+      headerName: "Irigated Area",
       flex: 1,
     },
     {
-      field: "zipCode",
-      headerName: "Zip Code",
+      field: "action",
+      headerName: "Action",
       flex: 1,
+      renderCell: (params) => (
+        <Box>
+          <IconButton aria-label="edit">
+            <LocationOnOutlinedIcon />
+          </IconButton>
+          <IconButton aria-label="edit">
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="delete">
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
+        </Box>
+      ),
     },
   ];
 
   return (
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="TANKS"
+        subtitle="List of Tanks for Future Reference"
       />
       <Box
         m="40px 0 0 0"
@@ -91,7 +126,7 @@ const ViewTanks = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={tankData}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

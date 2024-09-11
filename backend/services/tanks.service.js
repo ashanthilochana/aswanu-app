@@ -9,7 +9,22 @@ TankService.addTanksData = async (data) => {
       let docRef = firestore.collection("PhysicalTanks").doc(Date.now().toString());
       await docRef.set(data);
     } catch (error) {
-      console.error("Error saving sesnor data to firestore : ", error);
+      console.error("Error saving tank data to firestore : ", error);
+      throw error;
+    }
+  };
+
+  // Get tank data from firestore
+TankService.getTanksData = async () => {
+    try {
+      const snapshot = await firestore.collection("PhysicalTanks").get();
+      let tanksData = [];
+      snapshot.forEach((doc) => {
+        tanksData.push(doc.data());
+      });
+      return tanksData;
+    } catch (error) {
+      console.error("Error getting tank data from firestore : ", error);
       throw error;
     }
   };
