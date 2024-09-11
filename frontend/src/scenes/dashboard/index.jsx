@@ -42,6 +42,17 @@ const Dashboard = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [realTimeData, setRealTimeData] = useState({
     temp: "0",
+    tempStat: "Normal",
+    soilMoisture: "0",
+    soilMoistureStat: "Normal",
+    rainfall: "0",
+    rainfallStat: "Normal",
+    humidity: "0",
+    humidityStat: "Normal",
+    security: "No Alerts",
+    ldr: "0",
+    tankWaterLevel: "0",
+    tankWaterLevelStat: "Normal",
     waterPumpOn: false,
     fertilizerPumpOn: false,
   });
@@ -57,10 +68,22 @@ const Dashboard = () => {
 
     function onRefreshData(data) {
       console.log(data);
+
       setRealTimeData((prev) => {
         return {
           ...prev,
-          temp: data.Sensors.Malabe.temp, //find another way
+          temp: data.Sensors.Malabe.temp,
+          tempStat: data.Sensors.Malabe.temp > 30 ? "High" : "Normal",
+          soilMoisture: data.Sensors.Malabe.soilMoisture,
+          soilMoistureStat: data.Sensors.Malabe.soilMoisture < 30 ? "Low" : "Normal",
+          rainfall: data.Sensors.Malabe.rain,
+          rainfallStat: data.Sensors.Malabe.rain > 30 ? "High" : "Normal",
+          humidity: data.Sensors.Malabe.humidity,
+          humidityStat: data.Sensors.Malabe.humidity > 30 ? "High" : "Normal",
+          security: data.Sensors.Malabe.security === "true" ? "Alert" : "No Alerts",
+          ldr: data.Sensors.Malabe.ldr,
+          tankWaterLevel: data.Sensors.Malabe.tankWaterLevel,
+          tankWaterLevelStat: data.Sensors.Malabe.tankWaterLevel < 30 ? "Low" : "Normal",
           waterPumpOn: data.Sensors.Malabe.Devices.waterPump,
           fertilizerPumpOn: data.Sensors.Malabe.Devices.fertilizerSpray,
         };
@@ -139,7 +162,7 @@ const Dashboard = () => {
             title={`${realTimeData.temp}` + " °C"}
             subtitle="Temparature"
             progress="0.2"
-            increase="+20%"
+            increase= {realTimeData.tempStat}
             icon={
               <ThermostatIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -155,10 +178,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Normal"
+            title={realTimeData.soilMoisture}
             subtitle="Soil Moisture"
             progress="0.50"
-            increase="+21%"
+            increase=  {realTimeData.soilMoistureStat}
             icon={
               <WaterDropIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -174,10 +197,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Raining"
+            title={realTimeData.rainfall}
             subtitle="Weather"
             progress="0.30"
-            increase="+5%"
+            increase= {realTimeData.rainfallStat}
             icon={
               <ThunderstormIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -193,10 +216,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Normal"
+            title={realTimeData.humidity}
             subtitle="Air Humidity"
             progress="0.80"
-            increase="+43%"
+            increase= {realTimeData.humidityStat}
             icon={
               <GrainIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
@@ -214,7 +237,7 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="No Alerts"
+            title={realTimeData.security}
             subtitle="Security Status"
             progress="NULL"
             increase=""
@@ -271,10 +294,10 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title="Medium"
+            title={realTimeData.tankWaterLevel}
             subtitle="Tank Water Level"
             progress="NULL"
-            increase=""
+            increase= {realTimeData.tankWaterLevelStat}
             icon={
               <WavesIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}

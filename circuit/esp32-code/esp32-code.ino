@@ -17,7 +17,6 @@
 // Pin definitions
 #define W_PUMP_PIN 15
 #define F_SPRAY_PIN 2
-#define SM_SENSOR_PIN 4
 
 // Firebase ESP32 client object
 FirebaseData fbdo;
@@ -39,6 +38,8 @@ int ph = 0;
 int rain = 0;
 int soilMoisture = 0;
 int temp = 0;
+int tank = 0;
+bool security = true;
 bool fertilizerSpray = false;
 bool waterPump = false;
 
@@ -69,6 +70,8 @@ void updateFirebase() {
     Firebase.RTDB.setInt(&fbdo, databasePath + "rain", rain);
     Firebase.RTDB.setInt(&fbdo, databasePath + "soilMoisture", soilMoisture);
     Firebase.RTDB.setInt(&fbdo, databasePath + "temp", temp);
+    Firebase.RTDB.setInt(&fbdo, databasePath + "tankWaterLevel", tank);
+    Firebase.RTDB.setBool(&fbdo, databasePath + "security", security);
     
     // Firebase.RTDB.setBool(&fbdo, databasePath + devicePathAddOn + "fertilizerSpray", fertilizerSpray);
     // Firebase.RTDB.setBool(&fbdo, databasePath + devicePathAddOn + "waterPump", waterPump);
@@ -110,7 +113,6 @@ void setup() {
   // Initialize pins
   pinMode(W_PUMP_PIN, OUTPUT);
   pinMode(F_SPRAY_PIN, OUTPUT);
-  pinMode(SM_SENSOR_PIN, INPUT);
 
   // Start serial communication
   Serial.begin(115200);
@@ -144,6 +146,16 @@ void setup() {
 
 void loop() {
 
+  int randomNumber = random(5, 10);
+
+  humidity = humidity + randomNumber * 4;
+  ldr = ldr+ randomNumber * 10;
+  ph = ph+ randomNumber * 2;
+  rain = rain+ randomNumber * 5;
+  soilMoisture = soilMoisture+ randomNumber * 3;
+  temp = temp+ randomNumber *2.5;
+  tank = tank+ randomNumber * 30;
+
   // Firebase is ready and connected.
   // The user has successfully signed up (or authenticated).
   // Check if 5 seconds have passed since the last data transmission, 
@@ -162,18 +174,28 @@ void loop() {
     // Turn On/Off Devices
     digitalWrite(W_PUMP_PIN, waterPump ? HIGH : LOW);
     digitalWrite(F_SPRAY_PIN, fertilizerSpray ? HIGH : LOW);
+
+    // Define sensor variables
+    int humidity = 0;
+    int ldr = 0;
+    int ph = 0;
+    int rain = 0;
+    int soilMoisture = 0;
+    int temp = 0;
+    int tank = 0;
+    
     
   }
 
-
-  // Read Sensor Readings
-  soilMoisture = analogRead(SM_SENSOR_PIN);
-
-  delay(100);
-
-  // Print Sensor Readings
-  Serial.print("Soil Moisture Value: ");
-  Serial.println(soilMoisture);
-
   delay(1000);
+
+  // Define sensor variables
+  int humidity = 0;
+  int ldr = 0;
+  int ph = 0;
+  int rain = 0;
+  int soilMoisture = 0;
+  int temp = 0;
+  int tank = 0;
+    
 }
