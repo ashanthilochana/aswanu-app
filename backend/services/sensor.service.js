@@ -3,6 +3,7 @@ import { ref, child, get } from "firebase/database";
 
 let SensorService = {};
 
+
 async function saveSensorDataToFirestore(data) {
   try {
     let docRef = firestore.collection("sensors").doc(Date.now().toString());
