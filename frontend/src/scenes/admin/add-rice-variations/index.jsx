@@ -11,22 +11,34 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
+import axios from "axios";
 
 const AddRiceVariations = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
     console.log(values);
+
+    axios
+      .post("http://localhost:5300/api/variation/add", values)
+      .then((response) => {
+        console.log("Form data submitted successfully:", response.data);
+        // Handle success (e.g., clear the form or show a success message)
+      })
+      .catch((error) => {
+        console.error("Error submitting form data:", error);
+        // Handle error (e.g., show an error message)
+      });
   };
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="ADD RICE VARIATION" subtitle="Add a New Rice Variant" />
 
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
+        validationSchema={riceVariationSchema}
       >
         {({
           values,
@@ -49,105 +61,82 @@ const AddRiceVariations = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Rice Variant Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.variantName}
+                name="variantName"
+                error={!!touched.variantName && !!errors.variantName}
+                helperText={touched.variantName && errors.variantName}
                 sx={{ gridColumn: "span 2" }}
               />
-
-              {/* Added by us
-              <FormControl variant="filled">
-                <InputLabel id="demo-simple-select-filled-label">
-                  Age
-                </InputLabel>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Category"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.category}
+                name="category"
+                error={!!touched.category && !!errors.category}
+                helperText={touched.category && errors.category}
+                sx={{ gridColumn: "span 2" }}
+              />
+              
+              <FormControl fullWidth variant="filled" sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="season-select-label">Growing Season</InputLabel>
                 <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value= {values.age}
+                  labelId="season-select-label"
+                  id="growing-season"
+                  name="growingSeason"
+                  value={values.growingSeason}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.growingSeason && !!errors.growingSeason}
                 >
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value="yala">Yala</MenuItem>
+                  <MenuItem value="maha">Maha</MenuItem>
                 </Select>
-              </FormControl> */}
+                {touched.growingSeason && errors.growingSeason && (
+                  <p style={{ color: "red" }}>{errors.growingSeason}</p>
+                )}
+              </FormControl>
 
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Disease Resistance"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                value={values.diseaseResistance}
+                name="diseaseResistance"
+                error={!!touched.diseaseResistance && !!errors.diseaseResistance}
+                helperText={touched.diseaseResistance && errors.diseaseResistance}
                 sx={{ gridColumn: "span 2" }}
               />
+
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Email"
+                label="Environmental Suitability"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                value={values.environmentalSuitability}
+                name="environmentalSuitability"
+                error={!!touched.environmentalSuitability && !!errors.environmentalSuitability}
+                helperText={touched.environmentalSuitability && errors.environmentalSuitability}
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Add Rice Variation
               </Button>
             </Box>
           </form>
@@ -157,27 +146,20 @@ const AddRiceVariations = () => {
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+const riceVariationSchema = yup.object().shape({
+  variantName: yup.string().required("Required"),
+  category: yup.string().required("Required"),
+  growingSeason: yup.string().required("Required"),
+  diseaseResistance: yup.string().required("Required"),
+  environmentalSuitability: yup.string().required("Required"),
 });
+
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  variantName: "",
+  category: "",
+  growingSeason: "",
+  diseaseResistance: "",
+  environmentalSuitability: "",
 };
 
 export default AddRiceVariations;

@@ -12,6 +12,8 @@ import { scheduleCronJobs } from "./config/cron.config.js";
 import { default as userRouter } from "./routes/user.routes.js";
 import { default as sensorRouter } from "./routes/sensor.routes.js";
 import { default as tankRouter } from "./routes/tanks.routes.js";
+import { default as solutionsRouter } from "./routes/solutions.routes.js";
+import { default as variationRouter } from "./routes/variations.routes.js";
 
 dotenv.config();
 
@@ -34,6 +36,8 @@ app.use(express.json());
 app.use(userRouter);
 app.use(sensorRouter);
 app.use(tankRouter);
+app.use(solutionsRouter);
+app.use(variationRouter);
 
 // using Socket.IO configuraton
 socketConfig(io);
