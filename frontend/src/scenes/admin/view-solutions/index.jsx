@@ -1,63 +1,100 @@
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
-import { useTheme } from "@mui/material";
+import { useTheme, IconButton } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import axios from "axios";
 
 const ViewSolutions = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [solutionData, setSolutionData] = useState([]);
+
+  useEffect(() => {
+    const fetchSolutionData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5300/api/solutions/get");
+        const solutions = response.data.map((solution, index) => ({
+          ...solution,
+          id: solution.id || index,  // Use the index if id is missing
+        }));
+        setSolutionData(solutions);
+      } catch (error) {
+        console.error("Error fetching solution data:", error);
+      }
+    };
+
+    fetchSolutionData();
+  }, []);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "solutionId", headerName: "Solution ID", flex: 1 },
+    { field: "solutionName", headerName: "Solution Name", flex: 1 },
     {
-      field: "name",
-      headerName: "Name",
+      field: "diseaseCategory",
+      headerName: "Disease Category",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
+      field: "applicationMethod",
+      headerName: "Application Method",
+      flex: 1,
+    },
+    {
+      field: "dosage",
+      headerName: "Dosage (ml/ha)",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "applicationFrequency",
+      headerName: "Application Frequency",
+      type: "number",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "applicationInterval",
+      headerName: "Application Interval (days)",
+      type: "number",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "costPerHectare",
+      headerName: "Cost per Hectare (Rs)",
+      type: "number",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "description",
+      headerName: "Description",
       flex: 1,
     },
     {
-      field: "zipCode",
-      headerName: "Zip Code",
+      field: "action",
+      headerName: "Action",
       flex: 1,
-    },
+      renderCell: (params) => (
+        <Box>
+          <IconButton key={`edit-${params.id}`} aria-label="edit">
+            <EditIcon />
+          </IconButton>
+          <IconButton key={`delete-${params.id}`} aria-label="delete">
+            <DeleteOutlineOutlinedIcon />
+          </IconButton>
+        </Box>
+      ),
+    }
   ];
 
   return (
     <Box m="20px">
-      <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
-      />
+      <Header title="SOLUTIONS" subtitle="List of Solutions for Disease Management" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -91,7 +128,7 @@ const ViewSolutions = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={solutionData}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

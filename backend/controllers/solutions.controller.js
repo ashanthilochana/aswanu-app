@@ -14,4 +14,15 @@ SolutionsController.addSolutionsData = async (req, res) => {
   }
 };
 
+// Get solution data from firestore
+SolutionsController.getSolutionsData = async (req, res) => {
+  try {
+    let solutionsData = await SolutionsService.getSolutionsData();
+    res.status(200).send(solutionsData);
+  } catch (error) {
+    console.error("Error getting solution data from firestore : ", error);
+    res.status(500).send(error);
+  }
+};
+
 export default SolutionsController;

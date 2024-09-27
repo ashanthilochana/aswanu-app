@@ -16,4 +16,15 @@ TanksController.addTanksData = async (req, res) => {
     
 }
 
+// Get tanks
+TanksController.getTanksData = async (req, res) => {
+    try {
+        // Call a function to get sensor data from firestore
+        const tanksData = await TanksService.getTanksData();
+        res.status(200).json(tanksData);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to get sensor data" });
+    }
+}
+
 export default TanksController;
