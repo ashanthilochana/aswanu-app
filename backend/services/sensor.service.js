@@ -3,6 +3,36 @@ import { ref, child, get } from "firebase/database";
 
 let SensorService = {};
 
+
+// Turn on off devices
+SensorService.updateDeviceStatus = async (deviceName, status) => {
+
+  let path = 'Sensors/Malabe/Devices/' + deviceName;
+
+  const ref = database.ref(path);
+
+// Set the value of waterPump to true
+ref.set(status)
+  .then(() => {
+    console.log('Data updated successfully!');
+  })
+  .catch((error) => {
+    console.error('Error updating data:', error);
+  });
+}
+
+// Add sensor data to firestore
+SensorService.addSensorData = async (data) => {
+  try {
+    let docRef = firestore.collection("SensorsDevices").doc(Date.now().toString());
+    await docRef.set(data);
+  } catch (error) {
+    console.error("Error saving sesnor data to firestore : ", error);
+    throw error;
+  }
+};
+
+// Save sensor data to firestore
 async function saveSensorDataToFirestore(data) {
   try {
     let docRef = firestore.collection("sensors").doc(Date.now().toString());
@@ -13,6 +43,7 @@ async function saveSensorDataToFirestore(data) {
   }
 }
 
+// Save sensor data to firestore
 SensorService.saveSensorData = async () => {
   try {
     const dbRef = ref(database);
@@ -28,6 +59,7 @@ SensorService.saveSensorData = async () => {
   }
 };
 
+// Get all sensor logs from firestore
 SensorService.getAllSensorLogs = async () => {
   try {
 

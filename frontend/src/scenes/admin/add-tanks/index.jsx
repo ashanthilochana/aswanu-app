@@ -11,18 +11,32 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
+import InputAdornment from "@mui/material/InputAdornment";
+import axios from "axios"; // Import axios to make API requests
 
-const AddTanks = () => {
+const AddTank = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     console.log(values);
+
+    axios
+      .post("http://localhost:5300/api/tank/add", values)
+      .then((response) => {
+        console.log("Form data submitted successfully:", response.data);
+        // Handle success (e.g., clear the form or show a success message)
+        window.alert("Tank added successfully!");
+      })
+      .catch((error) => {
+        console.error("Error submitting form data:", error);
+        // Handle error (e.g., show an error message)
+        window.alert("Error adding the tank. Please try again.");
+      });
   };
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
-
+      <Header title="Add New Tank" subtitle="Create a New Tank Profile" />
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -49,105 +63,130 @@ const AddTanks = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
+                label="Tank Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                value={values.tankName}
+                name="tankName"
+                error={!!touched.tankName && !!errors.tankName}
+                helperText={touched.tankName && errors.tankName}
                 sx={{ gridColumn: "span 2" }}
               />
 
-              {/* Added by us
-              <FormControl variant="filled">
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="District/Province"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.district}
+                name="district"
+                error={!!touched.district && !!errors.district}
+                helperText={touched.district && errors.district}
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Tank Capacity"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.tankCapacity}
+                name="tankCapacity"
+                error={!!touched.tankCapacity && !!errors.tankCapacity}
+                helperText={touched.tankCapacity && errors.tankCapacity}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">L</InputAdornment>
+                  ),
+                }}
+                sx={{ gridColumn: "span 1" }}
+              />
+
+              <FormControl variant="filled" sx={{ gridColumn: "span 1" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                  Age
+                  Water Source Type
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
                   id="demo-simple-select-filled"
-                  value= {values.age}
+                  value={values.sourceType}
+                  name="sourceType"
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.sourceType && !!errors.sourceType}
+                  helperText={touched.sourceType && errors.sourceType}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  <MenuItem value="River">River</MenuItem>
+                  <MenuItem value="Rainwater">Rainwater</MenuItem>
+                  <MenuItem value="Groundwater">Groundwater</MenuItem>
                 </Select>
-              </FormControl> */}
+              </FormControl>
+
+              <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-filled-label">
+                  Tank Status
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  value={values.tankStatus}
+                  name="tankStatus"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={!!touched.tankStatus && !!errors.tankStatus}
+                  helperText={touched.tankStatus && errors.tankStatus}
+                >
+                  <MenuItem value="Active">Active</MenuItem>
+                  <MenuItem value="Inactive">Inactive</MenuItem>
+                  <MenuItem value="Under Maintenance">
+                    Under Maintenance
+                  </MenuItem>
+                </Select>
+              </FormControl>
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="date"
+                label="Installation Date"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.installationDate}
+                name="installationDate"
+                error={!!touched.installationDate && !!errors.installationDate}
+                helperText={touched.installationDate && errors.installationDate}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                sx={{ gridColumn: "span 2" }}
+              />
 
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Last Name"
+                label="Irrigated Area"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Contact Number"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
+                value={values.irrigatedArea}
+                name="irrigatedArea"
+                error={!!touched.irrigatedArea && !!errors.irrigatedArea}
+                helperText={touched.irrigatedArea && errors.irrigatedArea}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">acres</InputAdornment>
+                  ),
+                }}
+                sx={{ gridColumn: "span 1" }}
               />
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Create New Tank
               </Button>
             </Box>
           </form>
@@ -157,27 +196,30 @@ const AddTanks = () => {
   );
 };
 
-const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
 const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+  tankName: yup.string().required("Tank Name is required"),
+  district: yup.string().required("District/Province is required"),
+  tankCapacity: yup
+    .number()
+    .required("Tank Capacity is required")
+    .positive("Tank Capacity must be positive"),
+  sourceType: yup.string().required("Water Source Type is required"),
+  tankStatus: yup.string().required("Tank Status is required"),
+  installationDate: yup.date().required("Installation Date is required"),
+  irrigatedArea: yup
+    .number()
+    .required("Irrigated Area is required")
+    .positive("Irrigated Area must be positive"),
 });
+
 const initialValues = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  tankName: "",
+  district: "",
+  tankCapacity: "",
+  sourceType: "",
+  tankStatus: "",
+  installationDate: "",
+  irrigatedArea: "",
 };
 
-export default AddTanks;
+export default AddTank;
