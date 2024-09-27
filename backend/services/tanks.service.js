@@ -29,5 +29,36 @@ TankService.getTanksData = async () => {
     }
   };
 
+  // Delete tank data from firestore
+TankService.deleteTanksData = async (id) => {
+  try {
+    await firestore.collection("PhysicalTanks").doc(id).delete();
+  } catch (error) {
+    console.error("Error deleting tank data from firestore : ", error);
+    throw error;
+    }
+  };
+
+// Update tank data in firestore
+TankService.updateTanksData = async (id, data) => {
+  try {
+    await firestore.collection("PhysicalTanks").doc(id).update(data);
+  } catch (error) {
+    console.error("Error updating tank data in firestore : ", error);
+    throw error;
+  }
+};
+
+// Get tank data with specific id from firestore
+TankService.getTanksDataById = async (id) => {
+  try {
+    const doc = await firestore.collection("PhysicalTanks").doc(id).get();
+    return doc.data();
+  } catch (error) {
+    console.error("Error getting tank data by id from firestore : ", error);
+    throw error;
+  }
+};
+
 
 export default TankService;
