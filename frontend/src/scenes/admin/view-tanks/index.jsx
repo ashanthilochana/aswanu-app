@@ -20,7 +20,7 @@ const ViewTanks = () => {
         const response = await axios.get("http://localhost:5300/api/tank/get");
         const tanks = response.data.map((tank, index) => ({
           ...tank,
-          id: tank.id || index,  // Use the index if id is missing
+          id: tank.tID || index,  // Use the tID for the key (use index as fallback)
         }));
         setTankData(tanks);
       } catch (error) {
@@ -30,6 +30,17 @@ const ViewTanks = () => {
 
     fetchTankData();
   }, []);
+
+  // Delete tank data using tID
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5300/api/tank/delete/${id}`);
+      const updatedTanks = tankData.filter((tank) => tank.tID !== id);
+      setTankData(updatedTanks);
+    } catch (error) {
+      console.error("Error deleting tank data:", error);
+    }
+  };
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
@@ -79,20 +90,21 @@ const ViewTanks = () => {
           <IconButton key={`edit-${params.id}`} aria-label="edit">
             <EditIcon />
           </IconButton>
-          <IconButton key={`delete-${params.id}`} aria-label="delete">
+          <IconButton
+            key={`delete-${params.id}`}
+            aria-label="delete"
+            onClick={() => handleDelete(params.id)}  // Pass the tID to handleDelete
+          >
             <DeleteOutlineOutlinedIcon />
           </IconButton>
         </Box>
       ),
-    }
+    },
   ];
-  
+
   return (
     <Box m="20px">
-      <Header
-        title="TANKS"
-        subtitle="List of Tanks for Future Reference"
-      />
+      <Header title="TANKS" subtitle="List of Tanks for Future Reference" />
       <Box
         m="40px 0 0 0"
         height="75vh"
