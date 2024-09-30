@@ -81,7 +81,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="ඔබව නැවතත් සාදරයෙන් පිලිගන්නෙමු" />
+        <Header title="DASHBOARD" subtitle="Welcome to Aswanu Dashboard" />
 
         {/* Created by us */}
         <Box display="flex">
