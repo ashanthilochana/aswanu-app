@@ -3,7 +3,7 @@ import { ref, child, get } from "firebase/database";
 
 let TankService = {};
 
-// Add sensor data to Firestore using custom tID as the document ID
+// Add tank data to Firestore using custom tID as the document ID
 TankService.addTanksData = async (data) => {
   try {
     // Step 1: Get the current tanks to determine the highest tID
@@ -87,6 +87,28 @@ TankService.getTanksDataById = async (id) => {
     throw error;
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export default TankService;

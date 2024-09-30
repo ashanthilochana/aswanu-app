@@ -1,77 +1,69 @@
-import SolutionsService from "../services/solutions.service.js";
+import SolutionService from "../services/solutions.service.js";
 
 let SolutionsController = {};
 
-// Add solution data to firestore
-SolutionsController.addSolutionsData = async (req, res) => {
-  try {
-    let data = req.body;
-    await SolutionsService.addSolutionsData(data);
-    res.status(200).send("Data saved successfully");
-  } catch (error) {
-    console.error("Error saving solution data to firestore : ", error);
-    res.status(500).send(error);
-  }
-};
+// Add solution
+SolutionsController.addSolutionData = async (req, res) => {
+    const data = req.body; // Extract data from request body
 
-// Get solution data from firestore
+    try {
+        // Call a function to save solution data to Firestore
+        await SolutionService.addSolutionData(data);
+        res.status(200).json({ message: "Solution data added successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to add solution data" });
+    }
+}
+
+// Get all solutions
 SolutionsController.getSolutionsData = async (req, res) => {
-  try {
-    let solutionsData = await SolutionsService.getSolutionsData();
-    res.status(200).send(solutionsData);
-  } catch (error) {
-    console.error("Error getting solution data from firestore : ", error);
-    res.status(500).send(error);
-  }
-};
+    try {
+        // Call a function to get all solution data from Firestore
+        const solutionsData = await SolutionService.getSolutionsData();
+        res.status(200).json(solutionsData);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to get solution data" });
+    }
+}
 
-// Get solution data by solutionId
-SolutionsController.getSolutionsDataById = async (req, res) => {
-  try {
-    let solutionId = req.params.solutionId;
-    let solutionsData = await SolutionsService.getSolutionsDataById(solutionId);
-    res.status(200).send(solutionsData);
-  } catch (error) {
-    console.error("Error getting solution data from firestore : ", error);
-    res.status(500).send(error);
-  }
-};
+// Delete solution by ID
+SolutionsController.deleteSolutionData = async (req, res) => {
+    const id = req.params.id; // Extract id from request parameters
 
-// get solution data by solutionName
-SolutionsController.getSolutionsDataByName = async (req, res) => {
-  try {
-    let solutionName = req.params.solutionName;
-    let solutionsData = await SolutionsService.getSolutionsDataByName(solutionName);
-    res.status(200).send(solutionsData);
-  } catch (error) {
-    console.error("Error getting solution data from firestore : ", error);
-    res.status(500).send(error);
-  }
-};
+    try {
+        // Call a function to delete solution data from Firestore
+        await SolutionService.deleteSolutionData(id);
+        res.status(200).json({ message: "Solution data deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete solution data" });
+    }
+}
 
-// Delete solution data by solutionName
-SolutionsController.deleteSolutionsDataByName = async (req, res) => {
-  try {
-    let solutionName = req.params.solutionName;
-    await SolutionsService.deleteSolutionsDataByName(solutionName);
-    res.status(200).send("Data deleted successfully");
-  } catch (error) {
-    console.error("Error deleting solution data from firestore : ", error);
-    res.status(500).send(error);
-  }
-};
+// Update solution by ID
+SolutionsController.updateSolutionData = async (req, res) => {
+    const id = req.params.id; // Extract id from request parameters
+    const data = req.body; // Extract data from request body
 
-// Update solution data by solutionName
-SolutionsController.updateSolutionsDataByName = async (req, res) => {
-  try {
-    let solutionName = req.params.solutionName;
-    let data = req.body;
-    await SolutionsService.updateSolutionsDataByName(solutionName, data);
-    res.status(200).send("Data updated successfully");
-  } catch (error) {
-    console.error("Error updating solution data in firestore : ", error);
-    res.status(500).send(error);
-  }
-};
+    try {
+        // Call a function to update solution data in Firestore
+        await SolutionService.updateSolutionData(id, data);
+        res.status(200).json({ message: "Solution data updated successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update solution data" });
+    }
+}
+
+// Get solution by ID
+SolutionsController.getSolutionDataById = async (req, res) => {
+    const id = req.params.id; // Extract id from request parameters
+
+    try {
+        // Call a function to get solution data by id from Firestore
+        const solutionData = await SolutionService.getSolutionDataById(id);
+        res.status(200).json(solutionData);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to get solution data by id" });
+    }
+}
 
 export default SolutionsController;
