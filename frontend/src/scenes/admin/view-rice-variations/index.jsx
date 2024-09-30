@@ -7,6 +7,7 @@ import { useTheme, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ViewRiceVariations = () => {
   const theme = useTheme();
@@ -55,7 +56,10 @@ const ViewRiceVariations = () => {
       flex: 1,
       renderCell: (params) => (
         <Box>
-          <IconButton key={`edit-${params.id}`} aria-label="edit">
+          <IconButton key={`edit-${params.id}`} aria-label="edit"
+           component={Link} // Use Link as a component for the button
+           to={`/admin/update-rice-variations/${params.id}`} // Link to the update route with the id
+           >
             <EditIcon />
           </IconButton>
           <IconButton key={`delete-${params.id}`} aria-label="delete">

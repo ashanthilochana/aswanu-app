@@ -26,6 +26,8 @@ const io = new Server(server, {
   }
 });
 
+
+
 // Configure CORS for both Express and Socket.IO
 app.use(corsMiddleware);
 

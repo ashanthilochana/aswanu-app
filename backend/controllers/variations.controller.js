@@ -25,4 +25,18 @@ RiceVariationController.getRiceVariationData = async (req, res) => {
       }
 };
 
+// update rice variation data
+RiceVariationController.updateRiceVariationData = async (req, res) => {
+  try {
+      const id = req.params.id; // Get the document ID from the route parameter
+      const updatedData = req.body; // Get the updated data from the request body
+
+      await RiceVariationService.updateRiceVariationData(id, updatedData);
+      res.status(200).send(`Rice variation data with ID: ${id} updated successfully`);
+  } catch (error) {
+      console.error("Error updating rice variation data in Firestore: ", error);
+      res.status(500).send(error);
+  }
+};
+
 export default RiceVariationController;
