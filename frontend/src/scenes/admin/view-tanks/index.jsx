@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { useTheme, IconButton } from "@mui/material";
+import { useTheme } from "@mui/material";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import axios from "axios";
 import EditTankPopup from "../edit-tanks-popup/index";  // Import the popup component
+import ConfirmDialog from "../../../components/ConfirmDialog";  // Import the confirmation dialog component
 
 const ViewTanks = () => {
   const theme = useTheme();
@@ -16,6 +17,8 @@ const ViewTanks = () => {
   const [tankData, setTankData] = useState([]);
   const [openEdit, setOpenEdit] = useState(false); // State to control popup visibility
   const [selectedTank, setSelectedTank] = useState(null); // Store selected tank data for editing
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false); // State for delete confirmation dialog
+  const [tankIdToDelete, setTankIdToDelete] = useState(null); // Store the tank ID to be deleted
 
   useEffect(() => {
     fetchTankData();
@@ -34,14 +37,29 @@ const ViewTanks = () => {
     }
   };
 
-  // Delete tank data using tID
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5300/api/tank/delete/${id}`);
-      const updatedTanks = tankData.filter((tank) => tank.tID !== id);
-      setTankData(updatedTanks);
-    } catch (error) {
-      console.error("Error deleting tank data:", error);
+  // Open delete confirmation dialog
+  const handleOpenDeleteDialog = (id) => {
+    setTankIdToDelete(id);
+    setOpenDeleteDialog(true);
+  };
+
+  // Close delete confirmation dialog
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+    setTankIdToDelete(null);
+  };
+
+  // Handle the delete action once confirmed
+  const handleConfirmDelete = async () => {
+    if (tankIdToDelete) {
+      try {
+        await axios.delete(`http://localhost:5300/api/tank/delete/${tankIdToDelete}`);
+        const updatedTanks = tankData.filter((tank) => tank.tID !== tankIdToDelete);
+        setTankData(updatedTanks);
+        handleCloseDeleteDialog(); // Close the dialog after deletion
+      } catch (error) {
+        console.error("Error deleting tank data:", error);
+      }
     }
   };
 
@@ -102,7 +120,7 @@ const ViewTanks = () => {
           <IconButton
             key={`delete-${params.id}`}
             aria-label="delete"
-            onClick={() => handleDelete(params.id)}
+            onClick={() => handleOpenDeleteDialog(params.id)} // Open delete dialog on click
           >
             <DeleteOutlineOutlinedIcon />
           </IconButton>
@@ -164,6 +182,15 @@ const ViewTanks = () => {
           refreshData={fetchTankData} // Refresh data after editing
         />
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        open={openDeleteDialog}
+        handleClose={handleCloseDeleteDialog}
+        handleConfirm={handleConfirmDelete}
+        title="Confirm Delete"
+        content="Are you sure you want to delete this tank? This action cannot be undone."
+      />
     </>
   );
 };
