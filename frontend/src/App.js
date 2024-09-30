@@ -28,6 +28,7 @@ import ViewRiceVariations from "./scenes/admin/view-rice-variations";
 import AddUsers from "./scenes/admin/add-users";
 import ViewUsers from "./scenes/admin/view-users";
 import UpdateRiceVariations from "./scenes/admin/update-rice-variations";
+import AddRiceDiseaseCategory from "./scenes/admin/add-rice-disease-catagory";
 
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -74,6 +75,8 @@ function App() {
               <Route path="/admin/add-users" element={<AddUsers />} />
               <Route path="/admin/view-users" element={<ViewUsers />} />
               <Route path="/admin/update-rice-variations/:id" element={<UpdateRiceVariations />} />
+              <Route path="/admin/add-rice-disease-catagory" element={<AddRiceDiseaseCategory />} />
+
             </Routes>
           </main>
         </div>
