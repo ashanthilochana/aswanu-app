@@ -4,61 +4,98 @@ import { tokens } from "../../../theme";
 import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SensorDataController from "../../../controllers/data/sensor.data.controller";
+import axios from "axios";
 
 const SensorLog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+
+  // Get sensor log with axio (http://localhost:5300/api/sensor/logs)
+  const [sensorLog, setSensorLog] = useState([]);
+
   useEffect(() => {
-    async function execute()
-    {
-      await SensorDataController.getDataByLocation("Malabe");
-    }
+    const fetchSensorLog = async () => {
+      try {
+        const response = await axios.get("http://localhost:5300/api/sensor/logs");
+        const logs = response.data.map((log, index) => ({
+          ...log,
+          id: log.id || index,  // Use the index if id is missing
+        }));
+        setSensorLog(logs);
+        console.log("Sensor log fetched successfully", logs);
+      } catch (error) {
+        console.error("Error fetching sensor log", error);
+      }
+    };
 
-    execute();
+    fetchSensorLog();
   }, []);
-
+  
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "name", headerName: "Station ID" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "date",
+      headerName: "Date",
+      flex: 1,
+      // cellClassName: "name-column--cell",
+    },
+    {
+      field: "time",
+      headerName: "Time",
+      flex: 1,
+      // cellClassName: "name-column--cell",
+    },
+    {
+      field: "location",
+      headerName: "Location",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "humidity",
+      headerName: "Humidity (%)",
+      flex: 1,
+      // type: "number",
+      // headerAlign: "left",
+      // align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "temp",
+      headerName: "Temperature (°C)",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "ldr",
+      headerName: "LDR",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "ph",
+      headerName: "Ph Value",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "rain",
+      headerName: "Rain",
       flex: 1,
     },
     {
-      field: "zipCode",
-      headerName: "Zip Code",
+      field: "security",
+      headerName: "Security",
+      flex: 1,
+    },
+    {
+      field: "tankWaterLevel",
+      headerName: "Tank Water (L/m^3)",
+      flex: 1,
+    },
+    {
+      field: "statu",
+      headerName: "Status",
       flex: 1,
     },
   ];
@@ -102,7 +139,7 @@ const SensorLog = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
+          rows={sensorLog}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />

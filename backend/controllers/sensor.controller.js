@@ -20,10 +20,35 @@ SensorController.addSensorData = async (req, res) => {
 
 SensorController.getSensorLogs = async (req, res) => {
     try {
-        let sensorLogs = await SensorService.getAllSensorLogs();
-        res.status(200).send(sensorLogs);
+        // Filter and map the sensor data to get only 'Malabe' data
+
+        const sensorLogs = await SensorService.getAllSensorLogs();
+
+        const malabeData = sensorLogs.map(entry => {
+            const malabe = entry.data.Sensors.Malabe;
+            
+            return {
+                id: entry.id,
+                rain: malabe.rain,
+                security: malabe.security,
+                temperature: malabe.temp,
+                soilMoisture: malabe.soilMoisture || 0, // Use default value if not present
+                ph: malabe.ph,
+                humidity: malabe.humidity,
+                light: malabe.ldr,
+                devices: {
+                    waterPump: malabe.Devices.waterPump,
+                    fertilizerSpray: malabe.Devices.fertilizerSpray
+                },
+                tankWaterLevel: malabe.tankWaterLevel
+            };
+        });
+
+        // Send the filtered and formatted Malabe data as JSON response
+        res.status(200).json(malabeData);
     } catch (error) {
-        res.status(500).send({message : "Internal Server error occurred while fetching sensor logs"});
+        // Handle any errors that occur during processing
+        res.status(500).json({ error: 'Failed to retrieve Malabe data' });
     }
 }
 
