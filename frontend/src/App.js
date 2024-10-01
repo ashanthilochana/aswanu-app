@@ -27,7 +27,6 @@ import AddRiceVariations from "./scenes/admin/add-rice-variations";
 import ViewRiceVariations from "./scenes/admin/view-rice-variations";
 import AddUsers from "./scenes/admin/add-users";
 import ViewUsers from "./scenes/admin/view-users";
-import UpdateRiceVariations from "./scenes/admin/update-rice-variations";
 import AddRiceDiseaseCategory from "./scenes/admin/add-rice-disease-catagory";
 import AddRiceDiseaseDetails from "./scenes/admin/add-rice-disease-details";
 
@@ -76,7 +75,6 @@ function App() {
               <Route path="/admin/view-rice-variations" element={<ViewRiceVariations />} />
               <Route path="/admin/add-users" element={<AddUsers />} />
               <Route path="/admin/view-users" element={<ViewUsers />} />
-              <Route path="/admin/update-rice-variations/:id" element={<UpdateRiceVariations />} />
               <Route path="/admin/add-rice-disease-catagory" element={<AddRiceDiseaseCategory />} />
               <Route path="/admin/add-rice-disease-details" element={<AddRiceDiseaseDetails />} />
               

@@ -3,61 +3,65 @@ import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
-import { useTheme, IconButton } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { useTheme, IconButton, Modal } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import EditRiceVariations from "./EditRiceVariations"; // Import the Edit modal
 
-const ViewRiceDiseaseCategories = () => {
+const ViewRiceVariations = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [riceDiseaseCategories, setRiceDiseaseCategories] = useState([]);
+  const [riceVariations, setRiceVariations] = useState([]);
+  const [openEditModal, setOpenEditModal] = useState(false); // State for modal visibility
+  const [selectedRiceVariation, setSelectedRiceVariation] = useState(null); // State for the selected rice variation
 
   useEffect(() => {
-    const fetchRiceDiseaseCategories = async () => {
+    const fetchRiceVariations = async () => {
       try {
-        const response = await axios.get("http://localhost:5300/api/disease-category/get");
-        const categories = response.data.map((category, index) => ({
-          ...category,
-          id: category.id || index,  // Use the index if id is missing
+        const response = await axios.get("http://localhost:5300/api/variation/get");
+        const variations = response.data.map((variation, index) => ({
+          ...variation,
+          id: variation.id || index, // Use the index if id is missing
         }));
-        setRiceDiseaseCategories(categories);
+        setRiceVariations(variations);
       } catch (error) {
-        console.error("Error fetching rice disease categories:", error);
+        console.error("Error fetching rice variations:", error);
       }
     };
 
-    fetchRiceDiseaseCategories();
+    fetchRiceVariations();
   }, []);
+
+  // Handle the "Edit" button click
+  const handleEditClick = (riceVariation) => {
+    setSelectedRiceVariation(riceVariation); // Set the selected rice variation data
+    setOpenEditModal(true); // Open the modal
+  };
+
+  // Handle modal close
+  const handleCloseModal = () => {
+    setOpenEditModal(false);
+    setSelectedRiceVariation(null); // Reset selected rice variation
+  };
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "categoryName", headerName: "Category Name", flex: 1 },
-    { field: "description", headerName: "Description", flex: 1 },
+    { field: "variantName", headerName: "Rice Variant Name", flex: 1 },
+    { field: "category", headerName: "Category", flex: 1 },
     {
-      field: "severityLevel",
-      headerName: "Severity Level",
+      field: "growingSeason",
+      headerName: "Growing Season",
       flex: 1,
     },
     {
-      field: "symptoms",
-      headerName: "Symptoms",
+      field: "diseaseResistance",
+      headerName: "Disease Resistance",
       flex: 1,
     },
     {
-      field: "preventionMethods",
-      headerName: "Prevention Methods",
-      flex: 1,
-    },
-    {
-      field: "region",
-      headerName: "Region",
-      flex: 1,
-    },
-    {
-      field: "status",
-      headerName: "Status",
+      field: "environmentalSuitability",
+      headerName: "Environmental Suitability",
       flex: 1,
     },
     {
@@ -66,13 +70,13 @@ const ViewRiceDiseaseCategories = () => {
       flex: 1,
       renderCell: (params) => (
         <Box>
-          <IconButton key={`edit-${params.id}`} aria-label="edit"
-           component={Link}
-           to={`/admin/update-rice-disease-category/${params.id}`} // Link to the update route with the id
+          <IconButton
+            aria-label="edit"
+            onClick={() => handleEditClick(params.row)} // Pass the selected row data
           >
             <EditIcon />
           </IconButton>
-          <IconButton key={`delete-${params.id}`} aria-label="delete">
+          <IconButton aria-label="delete">
             <DeleteOutlineOutlinedIcon />
           </IconButton>
         </Box>
@@ -82,7 +86,7 @@ const ViewRiceDiseaseCategories = () => {
 
   return (
     <Box m="20px">
-      <Header title="RICE DISEASE CATEGORIES" subtitle="List of Rice Disease Categories" />
+      <Header title="RICE VARIATIONS" subtitle="List of Rice Variations" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -116,13 +120,31 @@ const ViewRiceDiseaseCategories = () => {
         }}
       >
         <DataGrid
-          rows={riceDiseaseCategories}
+          rows={riceVariations}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
+
+      {/* Modal for editing rice variations */}
+      <Modal
+        open={openEditModal}
+        onClose={handleCloseModal}
+        aria-labelledby="edit-rice-variation-modal"
+        aria-describedby="modal-to-edit-rice-variation"
+      >
+        <Box>
+          {selectedRiceVariation && (
+            <EditRiceVariations
+              riceVariation={selectedRiceVariation} // Pass the selected variation data to the modal
+              onClose={handleCloseModal} // Pass the close function
+              setRiceVariations={setRiceVariations} // Pass the state update function to refresh data
+            />
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };
 
-export default ViewRiceDiseaseCategories;
+export default ViewRiceVariations;

@@ -2,58 +2,46 @@ import RiceVariationService from "../services/variations.service.js";
 
 let RiceVariationController = {};
 
-// add rice variation data
+// add rice variations
 RiceVariationController.addRiceVariationData = async (req, res) => {
-    try {
-        let data = req.body;
-        await RiceVariationService.addRiceVariationData(data);
-        res.status(200).send("Data saved successfully");
-      } catch (error) {
-        console.error("Error saving solution data to firestore : ", error);
-        res.status(500).send(error);
-      }
-};
-
-// get rice variation data
-RiceVariationController.getRiceVariationData = async (req, res) => {
-    try {
-        let data = await RiceVariationService.getRiceVariationData();
-        res.status(200).send(data);
-      } catch (error) {
-        console.error("Error fetching solution data from firestore : ", error);
-        res.status(500).send(error);
-      }
-};
-
-// update rice variation data
-/*RiceVariationController.updateTanksData = async (req, res) => {
-  const id = req.params.id; // Extract id from request parameters
   const data = req.body; // Extract data from request body
 
   try {
-      // Call a function to update sensor data in firestore
-      await RiceVariationService.updateRiceVariationData(id, data);
-      res.status(200).json({ message: " data updated successfully" });
+      // Call a function to save rice variation data to Firestore
+      await RiceVariationService.addRiceVariationData(data);
+      res.status(200).json({ message: "Rice variation data added successfully" });
   } catch (error) {
-      res.status(500).json({ error: "Failed to update  data" });
+      console.error("Error saving rice variation data to Firestore: ", error);
+      res.status(500).json({ error: "Failed to add rice variation data" });
   }
-}
+};
 
-// Get tanks by id
-RiceVariationController.getRiceVariationDataById = async (req, res) => {
+// get rice variations
+RiceVariationController.getRiceVariationData = async (req, res) => {
+  try {
+      const riceVariationData = await RiceVariationService.getRiceVariationData();
+      res.status(200).json(riceVariationData);
+  } catch (error) {
+      console.error("Error fetching rice variation data from Firestore: ", error);
+      res.status(500).json({ error: "Failed to get rice variation data" });
+  }
+};
+
+// Delete rice variations
+RiceVariationController.deleteRiceVariationData = async (req, res) => {
   const id = req.params.id; // Extract id from request parameters
 
   try {
-      // Call a function to get  data by id from firestore
-      const RiceVariationData = await RiceVariationService.getRiceVariationDataById(id);
-      res.status(200).json(tankData);
+      // Call a function to delete rice variation data from Firestore
+      await RiceVariationService.deleteRiceVariationData(id);
+      res.status(200).json({ message: "Rice variation data deleted successfully" });
   } catch (error) {
-      res.status(500).json({ error: "Failed to get get data by id" });
+      console.error("Error deleting rice variation data from Firestore: ", error);
+      res.status(500).json({ error: "Failed to delete rice variation data" });
   }
-}
-*/
+};
 
-// Update rice variation data
+// Update rice variations
 RiceVariationController.updateRiceVariationData = async (req, res) => {
   const id = req.params.id; // Extract id from request parameters
   const data = req.body; // Extract data from request body
@@ -68,7 +56,10 @@ RiceVariationController.updateRiceVariationData = async (req, res) => {
   }
 };
 
-// Get rice variation data by id
+
+
+
+// Get rice variations by id
 RiceVariationController.getRiceVariationDataById = async (req, res) => {
   const id = req.params.id; // Extract id from request parameters
 
@@ -77,10 +68,9 @@ RiceVariationController.getRiceVariationDataById = async (req, res) => {
       const riceVariationData = await RiceVariationService.getRiceVariationDataById(id);
       res.status(200).json(riceVariationData);
   } catch (error) {
-      console.error("Error fetching rice variation data by id from Firestore: ", error);
-      res.status(500).json({ error: "Failed to get rice variation data by id" });
+      console.error("Error getting rice variation data by id from Firestore: ", error);
+      res.status(500).json({ error: "Failed to get rice variation data" });
   }
 };
-
 
 export default RiceVariationController;
