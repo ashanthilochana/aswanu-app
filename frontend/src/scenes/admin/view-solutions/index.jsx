@@ -7,7 +7,7 @@ import { useTheme, IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import axios from "axios";
-import EditSolutionPopup from "../edit-solution-popup/index";  // Import the popup component
+import EditSolutionPopup from "../edit-solution-popup"; // Import the popup component
 
 const ViewSolutions = () => {
   const theme = useTheme();
@@ -25,7 +25,7 @@ const ViewSolutions = () => {
       const response = await axios.get("http://localhost:5300/api/solutions/get");
       const solutions = response.data.map((solution, index) => ({
         ...solution,
-        id: solution.solutionId || index,  // Use the solutionId for the key (use index as fallback)
+        id: solution.sID || index,  // Use solutionID for the key (use index as fallback)
       }));
       setSolutionData(solutions);
     } catch (error) {
@@ -33,11 +33,11 @@ const ViewSolutions = () => {
     }
   };
 
-  // Delete solution data using solutionId
+  // Delete solution data using solutionID
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:5300/api/solutions/delete/${id}`);
-      const updatedSolutions = solutionData.filter((solution) => solution.solutionId !== id);
+      const updatedSolutions = solutionData.filter((solution) => solution.sID !== id);
       setSolutionData(updatedSolutions);
     } catch (error) {
       console.error("Error deleting solution data:", error);
@@ -52,8 +52,7 @@ const ViewSolutions = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "solutionId", headerName: "Solution ID", flex: 1 },
-    { field: "solutionName", headerName: "Solution Name", flex: 1 },
+    { field: "solutionName", headerName: "Solution Name" },
     {
       field: "diseaseCategory",
       headerName: "Disease Category",
@@ -86,13 +85,8 @@ const ViewSolutions = () => {
     },
     {
       field: "costPerHectare",
-      headerName: "Cost per Hectare (Rs)",
+      headerName: "Cost per hectare (Rs)",
       type: "number",
-      flex: 1,
-    },
-    {
-      field: "description",
-      headerName: "Description",
       flex: 1,
     },
     {
@@ -119,7 +113,7 @@ const ViewSolutions = () => {
   return (
     <>
       <Box m="20px">
-        <Header title="SOLUTIONS" subtitle="List of Solutions for Disease Management" />
+        <Header title="SOLUTIONS" subtitle="List of Solutions for Disease Prevention" />
         <Box
           m="40px 0 0 0"
           height="75vh"

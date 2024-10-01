@@ -21,10 +21,7 @@ const EditSolutionPopup = ({ open, onClose, selectedSolution, refreshData }) => 
 
   const handleFormSubmit = async (values) => {
     try {
-      await axios.put(
-        `http://localhost:5300/api/solutions/update/${selectedSolution.solutionId}`,
-        values
-      );
+      await axios.put(`http://localhost:5300/api/solutions/update/${selectedSolution.sID}`, values);
       window.alert("Solution updated successfully!");
       refreshData(); // Refresh the solution list after updating
       onClose(); // Close the modal after successful edit
@@ -42,6 +39,7 @@ const EditSolutionPopup = ({ open, onClose, selectedSolution, refreshData }) => 
           onSubmit={handleFormSubmit}
           initialValues={selectedSolution || initialValues}
           validationSchema={checkoutSchema}
+          enableReinitialize={true}
         >
           {({
             values,
@@ -60,21 +58,6 @@ const EditSolutionPopup = ({ open, onClose, selectedSolution, refreshData }) => 
                   "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                 }}
               >
-                <TextField
-                  fullWidth
-                  variant="filled"
-                  type="text"
-                  label="Solution ID"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.solutionId}
-                  name="solutionId"
-                  error={!!touched.solutionId && !!errors.solutionId}
-                  helperText={touched.solutionId && errors.solutionId}
-                  sx={{ gridColumn: "span 2" }}
-                  disabled
-                />
-
                 <TextField
                   fullWidth
                   variant="filled"
@@ -154,7 +137,7 @@ const EditSolutionPopup = ({ open, onClose, selectedSolution, refreshData }) => 
                   fullWidth
                   variant="filled"
                   type="number"
-                  label="Application Interval (days)"
+                  label="Application Interval"
                   onBlur={handleBlur}
                   onChange={handleChange}
                   value={values.applicationInterval}
@@ -216,15 +199,14 @@ const checkoutSchema = yup.object().shape({
   solutionName: yup.string().required("Solution Name is required"),
   diseaseCategory: yup.string().required("Disease Category is required"),
   applicationMethod: yup.string().required("Application Method is required"),
-  dosage: yup.number().required("Dosage is required").positive().integer(),
-  applicationFrequency: yup.number().required("Application Frequency is required").positive().integer(),
-  applicationInterval: yup.number().required("Application Interval is required").positive().integer(),
+  dosage: yup.number().required("Dosage is required").positive(),
+  applicationFrequency: yup.number().required("Application Frequency is required").positive(),
+  applicationInterval: yup.number().required("Application Interval is required").positive(),
   costPerHectare: yup.number().required("Cost per hectare is required").positive(),
   description: yup.string().required("Description is required"),
 });
 
 const initialValues = {
-  solutionId: "",
   solutionName: "",
   diseaseCategory: "",
   applicationMethod: "",
