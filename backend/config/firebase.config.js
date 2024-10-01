@@ -16,7 +16,7 @@ import serviceAccount from "../firebase/firebase-key.json" with {type: "json"};
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://aswanu-db-default-rtdb.asia-southeast1.firebasedatabase.app"
+  databaseURL: "https://aswanu-app-bf9a1-default-rtdb.asia-southeast1.firebasedatabase.app/"
 });
 
 export const database = admin.database();
@@ -24,6 +24,5 @@ export const database = admin.database();
 export const auth = admin.auth();
 
 export const firestore = admin.firestore();
-
 
 

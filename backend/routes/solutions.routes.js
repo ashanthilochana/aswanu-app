@@ -4,11 +4,19 @@ import express from 'express';
 
 let router = express.Router();
 
-// add solutions data
-router.post("/api/solutions/add", SolutionsController.addSolutionsData);
+// Add solution data
+router.post("/api/solutions/add", SolutionsController.addSolutionData);
 
-// get solutions data
+// Get all solution data
 router.get("/api/solutions/get", SolutionsController.getSolutionsData);
 
+// Delete solution data by ID
+router.delete("/api/solutions/delete/:id", SolutionsController.deleteSolutionData);
+
+// Update solution data by ID
+router.put("/api/solutions/update/:id", SolutionsController.updateSolutionData);
+
+// Get solution data by ID
+router.get("/api/solutions/get/:id", SolutionsController.getSolutionDataById);
 
 export default router;
