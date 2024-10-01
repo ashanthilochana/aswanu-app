@@ -33,7 +33,7 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box m="20px" sx={{ bgcolor: "background.paper", p: 4, maxWidth: 800, mx: "auto", mt: 5 }}>
+      <Box m="20px" sx={{ bgcolor: "background.paper", p: 4, maxWidth: 800, mx: "auto", mt: 15 }}>
         <Header title="Edit Tank" subtitle="Modify Tank Details" />
         <Formik
           onSubmit={handleFormSubmit}
