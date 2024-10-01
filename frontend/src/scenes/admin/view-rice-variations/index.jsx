@@ -20,7 +20,7 @@ const ViewRiceVariations = () => {
         const response = await axios.get("http://localhost:5300/api/variation/get");
         const variations = response.data.map((variation, index) => ({
           ...variation,
-          id: variation.id || index,  // Use the index if id is missing
+          id: variation.id || index, // Use the index if id is missing
         }));
         setRiceVariations(variations);
       } catch (error) {
@@ -56,13 +56,19 @@ const ViewRiceVariations = () => {
       flex: 1,
       renderCell: (params) => (
         <Box>
-          <IconButton key={`edit-${params.id}`} aria-label="edit"
-           component={Link} // Use Link as a component for the button
-           to={`/admin/update-rice-variations/${params.id}`} // Link to the update route with the id
-           >
+          <IconButton
+            key={`edit-${params.id}`} // Fix key string interpolation
+            aria-label="edit"
+            component={Link} // Use Link as a component for the button
+            to={`/admin/update-rice-variations/${params.id}`} // Link to the update route with the id
+          >
             <EditIcon />
           </IconButton>
-          <IconButton key={`delete-${params.id}`} aria-label="delete">
+          <IconButton
+            key={`delete-${params.id}`} // Fix key string interpolation
+            aria-label="delete"
+            // Add delete functionality here if needed
+          >
             <DeleteOutlineOutlinedIcon />
           </IconButton>
         </Box>
@@ -98,10 +104,10 @@ const ViewRiceVariations = () => {
             backgroundColor: colors.blueAccent[700],
           },
           "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
+            color: `${colors.greenAccent[200]} !important`, // Fix string interpolation
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
+            color: `${colors.grey[100]} !important`, // Fix string interpolation
           },
         }}
       >

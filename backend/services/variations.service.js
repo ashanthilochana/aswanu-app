@@ -29,17 +29,12 @@ RiceVariationService.getRiceVariationData = async () => {
     }
   };
 
-// update rice variation data in firestore
-RiceVariationService.updateRiceVariationData = async (id, updatedData) => {
-  try {
-    let docRef = firestore.collection("RiceVariation").doc(Date.now().toString());
-    await docRef.update(updatedData);
-    console.log(`Document with ID: ${id} successfully updated`);
-  } catch (error) {
-    console.error("Error updating rice variation data in Firestore:", error);
-    throw error;
-  }
-};
+
+
+
+
   
 
 export default RiceVariationService;
+
+
