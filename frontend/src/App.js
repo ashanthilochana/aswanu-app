@@ -27,6 +27,7 @@ import AddRiceVariations from "./scenes/admin/add-rice-variations";
 import ViewRiceVariations from "./scenes/admin/view-rice-variations";
 import AddUsers from "./scenes/admin/add-users";
 import ViewUsers from "./scenes/admin/view-users";
+import Reccommendation from "./scenes/admin/recomendation";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -69,6 +70,7 @@ function App() {
               <Route path="/admin/view-tanks" element={<ViewTanks />} />
               <Route path="/admin/add-rice-variations" element={<AddRiceVariations />} />
               <Route path="/admin/view-rice-variations" element={<ViewRiceVariations />} />
+              <Route path="/admin/reccommendation" element={<Reccommendation />} />
               <Route path="/admin/add-users" element={<AddUsers />} />
               <Route path="/admin/view-users" element={<ViewUsers />} />
             </Routes>
