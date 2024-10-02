@@ -148,16 +148,8 @@ void setup() {
 
 void loop() {
 
-  // Define sensor variables
-  int humidity = 0;
-  int ldr = 0;
-  int ph = 0;
-  int rain = 0;
-  int soilMoisture = 0;
-  int temp = 0;
-  int tank = 0;
 
-  int randomNumber = random(5, 5);
+  int randomNumber = random(1, 5);
 
   humidity = humidity + randomNumber * 4;
   ldr = ldr+ randomNumber * 10;
