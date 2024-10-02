@@ -14,10 +14,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import axios from "axios";
 
-const Form = () => {
+const AddSolution = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = async (values) => {
     console.log(values);
 
     axios
@@ -25,18 +25,18 @@ const Form = () => {
       .then((response) => {
         console.log("Form data submitted successfully:", response.data);
         // Handle success (e.g., clear the form or show a success message)
-        window.alert("Tank added successfully!");
+        window.alert("Solution added successfully!");
       })
       .catch((error) => {
         console.error("Error submitting form data:", error);
         // Handle error (e.g., show an error message)
+        window.alert("Error adding the solution. Please try again.");
       });
   };
-
+      
   return (
     <Box m="20px">
-      <Header title="ADD SOLUTIONS" subtitle="Add new solutions for disease" />
-
+      <Header title="Add New Solution" subtitle="Create a New Solution for Disease" />
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -59,21 +59,7 @@ const Form = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Solution ID"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.solutionId}
-                name="solutionId"
-                error={!!touched.solutionId && !!errors.solutionId}
-                helperText={touched.solutionId && errors.solutionId}
-                sx={{ gridColumn: "span 2" }}
-              />
-
+              {/* Solution Name Field */}
               <TextField
                 fullWidth
                 variant="filled"
@@ -88,10 +74,11 @@ const Form = () => {
                 sx={{ gridColumn: "span 2" }}
               />
 
+              {/* Disease Category Field */}
               <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
-                <InputLabel>Disease Category</InputLabel>
+                <InputLabel id="disease-category-label">Disease Category</InputLabel>
                 <Select
-                  labelId="disease-category"
+                  labelId="disease-category-label"
                   id="disease-category"
                   name="diseaseCategory"
                   value={values.diseaseCategory}
@@ -105,12 +92,11 @@ const Form = () => {
                 </Select>
               </FormControl>
 
-              <Box sx={{ gridColumn: "span 2" }}></Box>
-
+              {/* Application Method Field */}
               <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
-                <InputLabel>Application Method</InputLabel>
+                <InputLabel id="application-method-label">Application Method</InputLabel>
                 <Select
-                  labelId="application-method"
+                  labelId="application-method-label"
                   id="application-method"
                   name="applicationMethod"
                   value={values.applicationMethod}
@@ -124,10 +110,11 @@ const Form = () => {
                 </Select>
               </FormControl>
 
+              {/* Dosage Field */}
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
+                type="number"
                 label="Dosage (per hectare)"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -138,8 +125,10 @@ const Form = () => {
                 InputProps={{
                   endAdornment: <InputAdornment position="end">ml</InputAdornment>,
                 }}
+                sx={{ gridColumn: "span 2" }}
               />
 
+              {/* Application Frequency Field */}
               <TextField
                 fullWidth
                 variant="filled"
@@ -154,12 +143,12 @@ const Form = () => {
                 sx={{ gridColumn: "span 2" }}
               />
 
-
+              {/* Application Interval Field */}
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Application Interval"
+                type="number"
+                label="Application Interval (days)"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.applicationInterval}
@@ -169,13 +158,15 @@ const Form = () => {
                 InputProps={{
                   endAdornment: <InputAdornment position="end">days</InputAdornment>,
                 }}
+                sx={{ gridColumn: "span 2" }}
               />
 
+              {/* Cost Per Hectare Field */}
               <TextField
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Cost per hectare"
+                type="number"
+                label="Cost per Hectare"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.costPerHectare}
@@ -187,6 +178,8 @@ const Form = () => {
                 }}
                 sx={{ gridColumn: "span 2" }}
               />
+
+              {/* Description Field */}
               <TextField
                 fullWidth
                 variant="filled"
@@ -198,19 +191,14 @@ const Form = () => {
                 name="description"
                 error={!!touched.description && !!errors.description}
                 helperText={touched.description && errors.description}
-               
                 sx={{ gridColumn: "span 4" }}
               />
-
-
-              
-
-
             </Box>
 
+            {/* Submit Button */}
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
-                Creat new solution
+                Create New Solution
               </Button>
             </Box>
           </form>
@@ -220,10 +208,7 @@ const Form = () => {
   );
 };
 
-const phoneRegExp = /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
 const checkoutSchema = yup.object().shape({
-  solutionId: yup.string().required("Solution ID is required"),
   solutionName: yup.string().required("Solution Name is required"),
   diseaseCategory: yup.string().required("Disease Category is required"),
   applicationMethod: yup.string().required("Application Method is required"),
@@ -231,11 +216,10 @@ const checkoutSchema = yup.object().shape({
   applicationFrequency: yup.number().required("Application Frequency is required").positive().integer(),
   applicationInterval: yup.number().required("Application Interval is required").positive().integer(),
   costPerHectare: yup.number().required("Cost per hectare is required").positive(),
-
+  description: yup.string().required("Description is required"),
 });
 
 const initialValues = {
-  solutionId: "",
   solutionName: "",
   diseaseCategory: "",
   applicationMethod: "",
@@ -243,7 +227,7 @@ const initialValues = {
   applicationFrequency: "",
   applicationInterval: "",
   costPerHectare: "",
-  costPerCycle: "",
+  description: "",
 };
 
-export default Form;
+export default AddSolution;

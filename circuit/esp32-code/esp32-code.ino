@@ -4,14 +4,14 @@
 #include "addons/RTDBHelper.h"   // Provide the RTDB payload printing info.
 
 // Replace these with your network credentials
-#define WIFI_SSID "Ashan-Iphone"
-#define WIFI_PASSWORD "123@ashan"
+#define WIFI_SSID "Aus Digi Solutions - Dialog4G"
+#define WIFI_PASSWORD "123@AusDigiSol"
 
 // Firebase project API Key Firebase RTDB URL
 // #define API_KEY "AIzaSyAPLzgkh7VfRS_0QHa_MtYW9vktPderDMA"
 // #define DATABASE_URL "https://aswanu-app-default-rtdb.asia-southeast1.firebasedatabase.app/" 
-#define API_KEY "AIzaSyAGPPRZ4VorXEJBinSI6UUp3WE6yUE-tQQ"
-#define DATABASE_URL "https://aswanu-db-default-rtdb.asia-southeast1.firebasedatabase.app/" 
+#define API_KEY "AIzaSyBgCvK3TYIULuITWp22nY-fILjWsO_fAgc"
+#define DATABASE_URL "https://aswanu-app-bf9a1-default-rtdb.asia-southeast1.firebasedatabase.app/" 
 
 // Location
 #define LOCATION "Malabe"
@@ -148,7 +148,16 @@ void setup() {
 
 void loop() {
 
-  int randomNumber = random(5, 10);
+  // Define sensor variables
+  int humidity = 0;
+  int ldr = 0;
+  int ph = 0;
+  int rain = 0;
+  int soilMoisture = 0;
+  int temp = 0;
+  int tank = 0;
+
+  int randomNumber = random(5, 5);
 
   humidity = humidity + randomNumber * 4;
   ldr = ldr+ randomNumber * 10;
@@ -176,28 +185,7 @@ void loop() {
     // Turn On/Off Devices
     digitalWrite(W_PUMP_PIN, waterPump ? HIGH : LOW);
     digitalWrite(F_SPRAY_PIN, fertilizerSpray ? HIGH : LOW);
-
-    // Define sensor variables
-    int humidity = 0;
-    int ldr = 0;
-    int ph = 0;
-    int rain = 0;
-    int soilMoisture = 0;
-    int temp = 0;
-    int tank = 0;
-    
-    
   }
 
   delay(1000);
-
-  // Define sensor variables
-  int humidity = 0;
-  int ldr = 0;
-  int ph = 0;
-  int rain = 0;
-  int soilMoisture = 0;
-  int temp = 0;
-  int tank = 0;
-    
 }

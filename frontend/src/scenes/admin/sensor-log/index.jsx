@@ -1,110 +1,65 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+
 import SensorDataController from "../../../controllers/data/sensor.data.controller";
 import axios from "axios";
 
 const SensorLog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [sensorData, setSensorData] = useState([]);
 
-
-  // Get sensor log with axio (http://localhost:5300/api/sensor/logs)
-  const [sensorLog, setSensorLog] = useState([]);
+  const fetchSensorData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5300/api/sensor/logs');
+      const data = response.data;
+      const formattedData = data.map((item, index) => ({
+        id: item.id || index, // Unique ID for each row
+        rain: item.data?.Sensors?.Malabe?.rain ?? 'N/A',
+        security: item.data?.Sensors?.Malabe?.security ?? 'N/A',
+        temp: item.data?.Sensors?.Malabe?.temp ?? 'N/A',
+        soilMoisture: item.data?.Sensors?.Malabe?.soilMoisture ?? 'N/A',
+        ph: item.data?.Sensors?.Malabe?.ph ?? 'N/A',
+        humidity: item.data?.Sensors?.Malabe?.humidity ?? 'N/A',
+        ldr: item.data?.Sensors?.Malabe?.ldr ?? 'N/A',
+        waterPump: item.data?.Sensors?.Malabe?.Devices?.waterPump ?? 'N/A',
+        fertilizerSpray: item.data?.Sensors?.Malabe?.Devices?.fertilizerSpray ?? 'N/A',
+        tankWaterLevel: item.data?.Sensors?.Malabe?.tankWaterLevel ?? 'N/A',
+      }));
+      setSensorData(formattedData);
+    } catch (error) {
+      console.error("Error fetching sensor data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchSensorLog = async () => {
-      try {
-        const response = await axios.get("http://localhost:5300/api/sensor/logs");
-        const logs = response.data.map((log, index) => ({
-          ...log,
-          id: log.id || index,  // Use the index if id is missing
-        }));
-        setSensorLog(logs);
-        console.log("Sensor log fetched successfully", logs);
-      } catch (error) {
-        console.error("Error fetching sensor log", error);
-      }
-    };
+    fetchSensorData();
 
-    fetchSensorLog();
   }, []);
   
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "name", headerName: "Station ID" },
-    {
-      field: "date",
-      headerName: "Date",
-      flex: 1,
-      // cellClassName: "name-column--cell",
-    },
-    {
-      field: "time",
-      headerName: "Time",
-      flex: 1,
-      // cellClassName: "name-column--cell",
-    },
-    {
-      field: "location",
-      headerName: "Location",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "humidity",
-      headerName: "Humidity (%)",
-      flex: 1,
-      // type: "number",
-      // headerAlign: "left",
-      // align: "left",
-    },
-    {
-      field: "temp",
-      headerName: "Temperature (°C)",
-      flex: 1,
-    },
-    {
-      field: "ldr",
-      headerName: "LDR",
-      flex: 1,
-    },
-    {
-      field: "ph",
-      headerName: "Ph Value",
-      flex: 1,
-    },
-    {
-      field: "rain",
-      headerName: "Rain",
-      flex: 1,
-    },
-    {
-      field: "security",
-      headerName: "Security",
-      flex: 1,
-    },
-    {
-      field: "tankWaterLevel",
-      headerName: "Tank Water (L/m^3)",
-      flex: 1,
-    },
-    {
-      field: "statu",
-      headerName: "Status",
-      flex: 1,
-    },
+    { field: "rain", headerName: "Rain", type: "number", flex: 1 },
+    { field: "security", headerName: "Security", type: "boolean", flex: 1 },
+    { field: "temp", headerName: "Temperature", type: "number", flex: 1 },
+    { field: "soilMoisture", headerName: "Soil Moisture", type: "number", flex: 1 },
+    { field: "ph", headerName: "pH", type: "number", flex: 1 },
+    { field: "humidity", headerName: "Humidity", type: "number", flex: 1 },
+    { field: "ldr", headerName: "Light (LDR)", type: "number", flex: 1 },
+    { field: "waterPump", headerName: "Water Pump", type: "boolean", flex: 1 },
+    { field: "fertilizerSpray", headerName: "Fertilizer Spray", type: "boolean", flex: 1 },
+    { field: "tankWaterLevel", headerName: "Tank Water Level", type: "number", flex: 1 },
   ];
 
   return (
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="SENSOR LOG"
+        subtitle="List of Sensor Data from Malabe"
       />
       <Box
         m="40px 0 0 0"
@@ -139,7 +94,7 @@ const SensorLog = () => {
         }}
       >
         <DataGrid
-          rows={sensorLog}
+          rows={sensorData}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
