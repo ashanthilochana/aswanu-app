@@ -15,8 +15,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
+import { tokens } from "../../../theme";
+import { useTheme } from "@mui/material";
 
 const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (values) => {
@@ -33,7 +37,7 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <Box m="20px" sx={{ bgcolor: "background.paper", p: 4, maxWidth: 800, mx: "auto", mt: 15 }}>
+      <Box m="20px" sx={{ bgcolor: colors.blueAccent[900], p: 4, maxWidth: 800, mx: "auto", mt: 15 }}>
         <Header title="Edit Tank" subtitle="Modify Tank Details" />
         <Formik
           onSubmit={handleFormSubmit}
@@ -68,7 +72,7 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
                   name="tankName"
                   error={!!touched.tankName && !!errors.tankName}
                   helperText={touched.tankName && errors.tankName}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 2", mb: 2 }}
                 />
 
                 <TextField
@@ -82,7 +86,7 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
                   name="district"
                   error={!!touched.district && !!errors.district}
                   helperText={touched.district && errors.district}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 2", mb: 2 }}
                 />
 
                 <TextField
@@ -101,10 +105,10 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
                       <InputAdornment position="end">L</InputAdornment>
                     ),
                   }}
-                  sx={{ gridColumn: "span 1" }}
+                  sx={{ gridColumn: "span 1", mb: 2 }}
                 />
 
-                <FormControl variant="filled" sx={{ gridColumn: "span 1" }}>
+                <FormControl variant="filled" sx={{ gridColumn: "span 1", mb: 2 }}>
                   <InputLabel>Water Source Type</InputLabel>
                   <Select
                     value={values.sourceType}
@@ -119,7 +123,7 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
                   </Select>
                 </FormControl>
 
-                <FormControl variant="filled" sx={{ gridColumn: "span 2" }}>
+                <FormControl variant="filled" sx={{ gridColumn: "span 2", mb: 2 }}>
                   <InputLabel>Tank Status</InputLabel>
                   <Select
                     value={values.tankStatus}
@@ -148,7 +152,7 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 2", mb: 2 }}
                 />
 
                 <TextField
@@ -167,10 +171,13 @@ const EditTankPopup = ({ open, onClose, selectedTank, refreshData }) => {
                       <InputAdornment position="end">acres</InputAdornment>
                     ),
                   }}
-                  sx={{ gridColumn: "span 1" }}
+                  sx={{ gridColumn: "span 1", mb: 2 }}
                 />
               </Box>
               <Box display="flex" justifyContent="end" mt="20px">
+                <Button type="button" variant="contained" sx={{ mr: 2 }} onClick={onClose}>
+                  Cancel
+                </Button>
                 <Button type="submit" color="secondary" variant="contained">
                   Update Tank
                 </Button>
