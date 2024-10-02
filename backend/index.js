@@ -14,6 +14,7 @@ import { default as sensorRouter } from "./routes/sensor.routes.js";
 import { default as tankRouter } from "./routes/tanks.routes.js";
 import { default as solutionsRouter } from "./routes/solutions.routes.js";
 import { default as variationRouter } from "./routes/variations.routes.js";
+import { default as dieasecategoryRouter } from "./routes/dieasecategory.routes.js";
 
 dotenv.config();
 
@@ -25,6 +26,8 @@ const io = new Server(server, {
     origin: "http://localhost:5000"
   }
 });
+
+
 
 // Configure CORS for both Express and Socket.IO
 app.use(corsMiddleware);
@@ -38,6 +41,8 @@ app.use(sensorRouter);
 app.use(tankRouter);
 app.use(solutionsRouter);
 app.use(variationRouter);
+app.use(dieasecategoryRouter);
+
 
 // using Socket.IO configuraton
 socketConfig(io);

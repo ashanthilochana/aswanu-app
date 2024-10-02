@@ -10,4 +10,14 @@ router.post("/api/variation/add", RiceVariationController.addRiceVariationData);
 // get rice variation data
 router.get("/api/variation/get", RiceVariationController.getRiceVariationData);
 
+// delete rice variation data
+router.delete("/api/variation/delete/:id", RiceVariationController.deleteRiceVariationData);
+
+// Update rice variation data
+router.put("/api/variation/update/:id", RiceVariationController.updateRiceVariationData );
+
+//get rice variation data by id
+router.get("/api/variation/get/:id", RiceVariationController.getRiceVariationDataById );
+
+
 export default router;
