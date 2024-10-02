@@ -6,6 +6,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import PolicyIcon from '@mui/icons-material/Policy';
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
@@ -222,6 +223,14 @@ const Sidebar = () => {
               title="View Variations"
               to="/admin/view-rice-variations"
               icon={<GrassIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            
+            <Item
+              title="Rice Recomendation"
+              to="/admin/reccommendation"
+              icon={<PolicyIcon />}
               selected={selected}
               setSelected={setSelected}
             />
