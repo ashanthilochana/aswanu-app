@@ -29,6 +29,7 @@ import AddUsers from "./scenes/admin/add-users";
 import ViewUsers from "./scenes/admin/view-users";
 import Reccommendation from "./scenes/admin/recomendation";
 
+
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
@@ -73,6 +74,10 @@ function App() {
               <Route path="/admin/reccommendation" element={<Reccommendation />} />
               <Route path="/admin/add-users" element={<AddUsers />} />
               <Route path="/admin/view-users" element={<ViewUsers />} />
+              <Route path="/admin/add-rice-disease-catagory" element={<AddRiceDiseaseCategory />} />
+              <Route path="/admin/add-rice-disease-details" element={<AddRiceDiseaseDetails />} />
+              
+
             </Routes>
           </main>
         </div>

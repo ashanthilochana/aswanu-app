@@ -24,7 +24,7 @@ const AddRiceVariations = () => {
       .then((response) => {
         console.log("Form data submitted successfully:", response.data);
         // Handle success (e.g., clear the form or show a success message)
-        window.alert("Tank added successfully!");
+        window.alert("Variations added successfully!");
       })
       .catch((error) => {
         console.error("Error submitting form data:", error);

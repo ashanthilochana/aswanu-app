@@ -7,7 +7,7 @@ let router = express.Router();
 // add sensor data
 router.post("/api/sensor/data", SensorController.addSensorData);
 
-// get sensor data
+// get sensor log
 router.get("/api/sensor/logs", SensorController.getSensorLogs);
 
 // updateDeviceStatus
