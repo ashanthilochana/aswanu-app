@@ -4,25 +4,25 @@ import { tokens } from "../../../theme";
 import { mockDataContacts } from "../../../data/mockData";
 import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
-import { useEffect } from "react";
-import SensorDataController from "../../../controllers/data/sensor.data.controller";
+import { useEffect, useState } from "react";
 
 const SensorLog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  useEffect(() => {
-    async function execute()
-    {
-      await SensorDataController.getDataByLocation("Malabe");
-    }
+  // Create useState to store the sensor log data
+  const [sensorData, setSensorData] = useState([]);
 
+  useEffect(() => async function execute()
+    {
+     
+    
     execute();
   }, []);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    { field: "statonId", headerName: "Station ID" },
     {
       field: "name",
       headerName: "Name",
