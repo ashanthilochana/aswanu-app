@@ -3,6 +3,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { useTheme } from "@mui/material";
+
 import { useState, useEffect } from "react";
 import SensorDataController from "../../../controllers/data/sensor.data.controller";
 import axios from "axios";
@@ -11,7 +12,6 @@ const SensorLog = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [sensorData, setSensorData] = useState([]);
-
 
   const fetchSensorData = async () => {
     try {
@@ -39,6 +39,7 @@ const SensorLog = () => {
   useEffect(() => {
     fetchSensorData();
   }, []);
+  
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     { field: "rain", headerName: "Rain", type: "number", flex: 1 },
