@@ -74,8 +74,6 @@ function App() {
               <Route path="/admin/reccommendation" element={<Reccommendation />} />
               <Route path="/admin/add-users" element={<AddUsers />} />
               <Route path="/admin/view-users" element={<ViewUsers />} />
-              <Route path="/admin/add-rice-disease-catagory" element={<AddRiceDiseaseCategory />} />
-              <Route path="/admin/add-rice-disease-details" element={<AddRiceDiseaseDetails />} />
               
 
             </Routes>
